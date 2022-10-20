@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     var timerLabel: UILabel!
-    var buttonStartTimer: UIButton!
+    var timerButton: UIButton!
     
     var hours: Int = 0
     var minutes: Int = 0
@@ -26,8 +26,8 @@ class ViewController: UIViewController {
         timerLabel = UILabel()
         timerLabel.translatesAutoresizingMaskIntoConstraints = false
         timerLabel.textAlignment = .center
-        timerLabel.font = UIFont.systemFont(ofSize: 42)
-        timerLabel.text = getTextForTimerLabel()
+        timerLabel.font = UIFont.scriptFont(size: 42)
+        setTextForTimerLabel()
         view.addSubview(timerLabel)
         
         NSLayoutConstraint.activate([
@@ -35,24 +35,33 @@ class ViewController: UIViewController {
             timerLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
         
-        buttonStartTimer = UIButton()
-        buttonStartTimer.translatesAutoresizingMaskIntoConstraints = false
-        buttonStartTimer.tintColor = UIColor(ciColor: .gray)
-        buttonStartTimer.setImage(
-            timerIsPaused ? UIImage(systemName: "play.circle") : UIImage(systemName: "pause.circle"), for: .normal
-        )
-        view.addSubview(buttonStartTimer)
+
+        
+        
+        timerButton = UIButton()
+        timerButton.translatesAutoresizingMaskIntoConstraints = false
+        timerButton.addTarget(self, action: #selector(buttonTimerTapped), for: .touchUpInside)
+        updateTimerButton()
+        view.addSubview(timerButton)
         
         NSLayoutConstraint.activate([
-            buttonStartTimer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            buttonStartTimer.topAnchor.constraint(equalTo: timerLabel.bottomAnchor),
-            buttonStartTimer.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
-
+            timerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            timerButton.topAnchor.constraint(equalTo: timerLabel.bottomAnchor),
+            timerButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
         ])
         
     }
     
-    func startTimer(){
+    
+    @objc private func buttonTimerTapped() {
+        if timerIsPaused {
+            startTimer()
+        } else {
+            stopTimer()
+        }
+    }
+    
+    private func startTimer(){
         timerIsPaused = false
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ tempTimer in
             if self.seconds == 59 {
@@ -66,22 +75,43 @@ class ViewController: UIViewController {
             } else {
                 self.seconds = self.seconds + 1
             }
+            self.setTextForTimerLabel()
+            self.updateTimerButton()
         }
     }
     
-    func stopTimer(){
+    private func stopTimer(){
         timerIsPaused = true
         timer?.invalidate()
         timer = nil
+        updateTimerButton()
     }
     
-    private func getTextForTimerLabel() -> String {
-        if hours == 0, timerIsPaused {
-            return "0 : 00"
-        } else if hours == 0, !timerIsPaused {
-            return "\(minutes) : \(seconds)"
+    private func setTextForTimerLabel() {
+        var sec: String = "\(seconds)"
+        if seconds < 10 {
+            sec = "0\(seconds)"
         }
-        return "\(hours) : \(minutes) : \(seconds)"
+        
+        if hours == 0 {
+            self.timerLabel.text = "\(minutes) : \(sec)"
+        } else {
+            self.timerLabel.text = "\(hours) : \(minutes) : \(sec)"
+        }
+    }
+    
+    private func updateTimerButton() {
+        var config = UIImage.SymbolConfiguration(paletteColors: [.systemGray])
+        config = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 60)))
+        config = config.applying(UIImage.SymbolConfiguration(weight: .ultraLight))
+        
+        
+        self.timerButton.setImage(
+            timerIsPaused ?
+            UIImage(systemName: "play.circle", withConfiguration: config) :
+            UIImage(systemName: "pause.circle", withConfiguration: config),
+            for: .normal
+        )
     }
     
     
