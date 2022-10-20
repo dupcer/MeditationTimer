@@ -51,10 +51,10 @@ class ViewController: UIViewController {
         
         resetButton = UIButton()
         resetButton.translatesAutoresizingMaskIntoConstraints = false
-        resetButton.tintColor = .systemGray6
-        resetButton.setTitle("reset", for: .normal)
-        
-//        resetButton.addTarget(self, action: #selector(resetTime), for: .touchUpInside)
+        resetButton.tintColor = .systemGray
+        resetButton.setImage(UIImage(systemName: "gobackward"), for: .normal)
+        resetButton.addTarget(self, action: #selector(resetTime), for: .touchUpInside)
+        resetButton.isHidden = true
         view.addSubview(resetButton)
         
         NSLayoutConstraint.activate([
@@ -69,9 +69,13 @@ class ViewController: UIViewController {
     
     @objc private func buttonTimerTapped() {
         if timerIsPaused {
+            resetButton.isHidden = true
             startTimer()
         } else {
             stopTimer()
+            if hours + minutes + seconds != 0 {
+                resetButton.isHidden = false
+            }
         }
     }
     
@@ -115,7 +119,7 @@ class ViewController: UIViewController {
     }
     
     private func updateTimerButton() {
-        var config = UIImage.SymbolConfiguration(paletteColors: [.systemGray])
+        var config = UIImage.SymbolConfiguration(paletteColors: [.systemGray, .systemGray3])
         config = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 100)))
         config = config.applying(UIImage.SymbolConfiguration(weight: .ultraLight))
         
@@ -128,6 +132,13 @@ class ViewController: UIViewController {
         )
     }
     
+    @objc private func resetTime() {
+        hours = 0
+        minutes = 0
+        seconds = 0
+        setTextForTimerLabel()
+        resetButton.isHidden = true
+    }
     
 }
 
