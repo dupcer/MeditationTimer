@@ -112,10 +112,15 @@ class ViewController: UIViewController {
             sec = "0\(seconds)"
         }
         
+        var min: String = "\(minutes)"
+        if hours > 0, minutes < 10 {
+            min = "0\(minutes)"
+        }
+        
         if hours == 0 {
-            self.timerLabel.text = "\(minutes) : \(sec)"
+            self.timerLabel.text = "\(min) : \(sec)"
         } else {
-            self.timerLabel.text = "\(hours) : \(minutes) : \(sec)"
+            self.timerLabel.text = "\(hours) : \(min) : \(sec)"
         }
     }
     

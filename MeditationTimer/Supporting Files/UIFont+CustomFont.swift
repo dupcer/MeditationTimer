@@ -10,7 +10,7 @@ import UIKit
 
 extension UIFont {
     static func scriptFont(size: CGFloat) -> UIFont {
-        guard let customFont = UIFont(name: "STIXTwoMath-Regular", size: size) else {
+        guard let customFont = UIFont(name: "PingFangTC-Ultralight", size: size) else {
             return UIFont.systemFont(ofSize: size, weight: .ultraLight)
         }
         return customFont
