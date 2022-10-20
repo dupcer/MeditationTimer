@@ -27,7 +27,8 @@ class ViewController: UIViewController {
         timerLabel = UILabel()
         timerLabel.translatesAutoresizingMaskIntoConstraints = false
         timerLabel.textAlignment = .center
-        timerLabel.font = UIFont.scriptFont(size: 42)
+        timerLabel.font = UIFont.scriptFont(size: 62)
+        
         setTextForTimerLabel()
         view.addSubview(timerLabel)
         
