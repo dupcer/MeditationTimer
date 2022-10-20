@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     
     var timerLabel: UILabel!
     var timerButton: UIButton!
+    var resetButton: UIButton!
     
     var hours: Int = 0
     var minutes: Int = 0
@@ -36,8 +37,6 @@ class ViewController: UIViewController {
         ])
         
 
-        
-        
         timerButton = UIButton()
         timerButton.translatesAutoresizingMaskIntoConstraints = false
         timerButton.addTarget(self, action: #selector(buttonTimerTapped), for: .touchUpInside)
@@ -50,6 +49,21 @@ class ViewController: UIViewController {
             timerButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
         ])
         
+        resetButton = UIButton()
+        resetButton.translatesAutoresizingMaskIntoConstraints = false
+        resetButton.tintColor = .systemGray6
+        resetButton.setTitle("reset", for: .normal)
+        
+//        resetButton.addTarget(self, action: #selector(resetTime), for: .touchUpInside)
+        view.addSubview(resetButton)
+        
+        NSLayoutConstraint.activate([
+            resetButton.trailingAnchor.constraint(equalTo: timerButton.leadingAnchor),
+            resetButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+            resetButton.topAnchor.constraint(equalTo: timerLabel.bottomAnchor),
+            resetButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
+
+        ])
     }
     
     
@@ -102,7 +116,7 @@ class ViewController: UIViewController {
     
     private func updateTimerButton() {
         var config = UIImage.SymbolConfiguration(paletteColors: [.systemGray])
-        config = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 60)))
+        config = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 100)))
         config = config.applying(UIImage.SymbolConfiguration(weight: .ultraLight))
         
         
