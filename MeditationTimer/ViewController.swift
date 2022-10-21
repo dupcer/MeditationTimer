@@ -65,6 +65,8 @@ class ViewController: UIViewController {
             resetButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
 
         ])
+        
+        addShadowToElements([timerLabel, resetButton])
     }
     
     
@@ -144,6 +146,15 @@ class ViewController: UIViewController {
         seconds = 0
         setTextForTimerLabel()
         resetButton.isHidden = true
+    }
+    
+    private func addShadowToElements(_ elements: [UIView]) {
+        for view in elements {
+            view.layer.shadowColor = UIColor.systemGray.cgColor
+            view.layer.shadowOpacity = 50
+            view.layer.shadowOffset = .zero
+            view.layer.shadowRadius = 15
+        }
     }
     
 }
