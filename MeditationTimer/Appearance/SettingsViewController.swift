@@ -1,5 +1,4 @@
 //
-//  AppearanceEditViewController.swift
 //  MeditationTimer
 //
 //  Created by Damie on 21.10.2022.

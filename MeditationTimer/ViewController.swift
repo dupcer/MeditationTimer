@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var appearanceEditButton: UIButton!
+    var settingsButton: UIButton!
     var timerLabel: UILabel!
     var timerButton: UIButton!
     var resetButton: UIButton!
@@ -69,17 +69,18 @@ class ViewController: UIViewController {
             resetButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
         ])
         
-        
-        appearanceEditButton = UIButton()
-        appearanceEditButton.translatesAutoresizingMaskIntoConstraints = false
-        appearanceEditButton.tintColor = .systemGray
-        appearanceEditButton.setImage(UIImage(systemName: "paintpalette.fill"), for: .normal)
-        appearanceEditButton.addTarget(self, action: #selector(settingsTapped), for: .touchUpInside)
-        view.addSubview(appearanceEditButton)
+        var settingButtonConfiguration = UIButton.Configuration.plain()
+        settingButtonConfiguration.buttonSize = .medium
+        settingsButton = UIButton(configuration: settingButtonConfiguration)
+        settingsButton.translatesAutoresizingMaskIntoConstraints = false
+        settingsButton.tintColor = .systemGray
+        settingsButton.setImage(UIImage(systemName: "gearshape"), for: .normal)
+        settingsButton.addTarget(self, action: #selector(settingsTapped), for: .touchUpInside)
+        view.addSubview(settingsButton)
         
         NSLayoutConstraint.activate([
-            appearanceEditButton.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 16),
-            appearanceEditButton.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
+            settingsButton.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 16),
+            settingsButton.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor),
         ])
         
         addShadowToElements([timerLabel, resetButton])
@@ -185,6 +186,7 @@ class ViewController: UIViewController {
         if let sheet = settingsVC.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.prefersGrabberVisible = true
+            
         }
         self.present(settingsVC, animated: true, completion: nil)
     }
