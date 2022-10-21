@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var appearanceEditButton: UIButton!
     var timerLabel: UILabel!
     var timerButton: UIButton!
     var resetButton: UIButton!
@@ -18,16 +19,19 @@ class ViewController: UIViewController {
     var minutes: Int = 0
     var seconds: Int = 0
     var timerIsPaused: Bool = true
-    
     var timer: Timer? = nil
+    
+    let appearanceEditVC = AppearanceEditViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setDefaultBackground()
+        
         timerLabel = UILabel()
         timerLabel.translatesAutoresizingMaskIntoConstraints = false
         timerLabel.textAlignment = .center
-        timerLabel.font = UIFont.scriptFont(size: 62)
+        timerLabel.font = UIFont.systemFont(ofSize: 62, weight: .ultraLight)
         
         setTextForTimerLabel()
         view.addSubview(timerLabel)
@@ -63,12 +67,30 @@ class ViewController: UIViewController {
             resetButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
             resetButton.topAnchor.constraint(equalTo: timerLabel.bottomAnchor),
             resetButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
-
+        ])
+        
+        
+        appearanceEditButton = UIButton()
+        appearanceEditButton.translatesAutoresizingMaskIntoConstraints = false
+        appearanceEditButton.tintColor = .systemGray
+        appearanceEditButton.setImage(UIImage(systemName: "paintpalette.fill"), for: .normal)
+        appearanceEditButton.addTarget(self, action: #selector(appearanceEditTapped), for: .touchUpInside)
+        view.addSubview(appearanceEditButton)
+        
+        NSLayoutConstraint.activate([
+            appearanceEditButton.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 16),
+            appearanceEditButton.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
         ])
         
         addShadowToElements([timerLabel, resetButton])
+        
+
+
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+    }
     
     @objc private func buttonTimerTapped() {
         if timerIsPaused {
@@ -155,6 +177,36 @@ class ViewController: UIViewController {
             view.layer.shadowOffset = .zero
             view.layer.shadowRadius = 15
         }
+    }
+    
+    @objc private func appearanceEditTapped() {
+        appearanceEditVC.modalPresentationStyle = .pageSheet
+        if let sheet = appearanceEditVC.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = true
+        }
+        self.present(appearanceEditVC, animated: true, completion: nil)
+    }
+    
+    func setBackground(colors: [UIColor]) {
+        let colors = colors.map { $0.cgColor }
+        let gradientLayer = CAGradientLayer.gradientLayer(for: colors, in: self.view.frame)
+        self.view.layer.addSublayer(gradientLayer)
+        self.view.setNeedsDisplay()
+        
+    }
+    
+    private func setDefaultBackground() {
+        let gradientLayer = CAGradientLayer()
+        // Set the size of the layer to be equal to size of the display.
+        gradientLayer.frame = view.bounds
+        // Set an array of Core Graphics colors (.cgColor) to create the gradient.
+        // This example uses a Color Literal and a UIColor from RGB values.
+        gradientLayer.colors = [#colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1).cgColor, UIColor(ciColor: .blue).cgColor]
+        // Rasterize this static layer to improve app performance.
+        gradientLayer.shouldRasterize = true
+        // Apply the gradient to the backgroundGradientView.
+        self.view.layer.addSublayer(gradientLayer)
     }
     
 }
