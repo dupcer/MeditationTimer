@@ -94,14 +94,32 @@ class ViewController: UIViewController {
 //        print("viewWillAppear")
     }
     
+    private func hideElements(_ isHidden: Bool) {
+        
+        UIView.animate(withDuration: 1.2, delay: 0.5, animations: {
+            if isHidden {
+                self.resetButton.alpha = 0
+                self.settingsButton.alpha = 0
+            } else {
+                self.resetButton.alpha = 0.99
+                self.settingsButton.alpha = 1
+            }
+            
+        }, completion: {_ in
+            self.resetButton.isHidden = isHidden
+            self.settingsButton.isHidden = isHidden
+        } )
+        
+    }
+    
     @objc private func buttonTimerTapped() {
         if timerIsPaused {
-            resetButton.isHidden = true
+            hideElements(true)
             startTimer()
         } else {
             stopTimer()
             if hours + minutes + seconds != 0 {
-                resetButton.isHidden = false
+                hideElements(false)
             }
         }
     }
