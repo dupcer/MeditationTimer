@@ -21,12 +21,12 @@ class ViewController: UIViewController {
     var timerIsPaused: Bool = true
     var timer: Timer? = nil
     
-    let appearanceEditVC = AppearanceEditViewController()
+    let settingsVC = SettingsViewController()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setDefaultBackground()
         
         timerLabel = UILabel()
         timerLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -74,7 +74,7 @@ class ViewController: UIViewController {
         appearanceEditButton.translatesAutoresizingMaskIntoConstraints = false
         appearanceEditButton.tintColor = .systemGray
         appearanceEditButton.setImage(UIImage(systemName: "paintpalette.fill"), for: .normal)
-        appearanceEditButton.addTarget(self, action: #selector(appearanceEditTapped), for: .touchUpInside)
+        appearanceEditButton.addTarget(self, action: #selector(settingsTapped), for: .touchUpInside)
         view.addSubview(appearanceEditButton)
         
         NSLayoutConstraint.activate([
@@ -90,6 +90,7 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+//        print("viewWillAppear")
     }
     
     @objc private func buttonTimerTapped() {
@@ -179,35 +180,15 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc private func appearanceEditTapped() {
-        appearanceEditVC.modalPresentationStyle = .pageSheet
-        if let sheet = appearanceEditVC.sheetPresentationController {
+    @objc private func settingsTapped() {
+        settingsVC.modalPresentationStyle = .pageSheet
+        if let sheet = settingsVC.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.prefersGrabberVisible = true
         }
-        self.present(appearanceEditVC, animated: true, completion: nil)
+        self.present(settingsVC, animated: true, completion: nil)
     }
     
-    func setBackground(colors: [UIColor]) {
-        let colors = colors.map { $0.cgColor }
-        let gradientLayer = CAGradientLayer.gradientLayer(for: colors, in: self.view.frame)
-        self.view.layer.addSublayer(gradientLayer)
-        self.view.setNeedsDisplay()
-        
-    }
-    
-    private func setDefaultBackground() {
-        let gradientLayer = CAGradientLayer()
-        // Set the size of the layer to be equal to size of the display.
-        gradientLayer.frame = view.bounds
-        // Set an array of Core Graphics colors (.cgColor) to create the gradient.
-        // This example uses a Color Literal and a UIColor from RGB values.
-        gradientLayer.colors = [#colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1).cgColor, UIColor(ciColor: .blue).cgColor]
-        // Rasterize this static layer to improve app performance.
-        gradientLayer.shouldRasterize = true
-        // Apply the gradient to the backgroundGradientView.
-        self.view.layer.addSublayer(gradientLayer)
-    }
-    
+
 }
 
