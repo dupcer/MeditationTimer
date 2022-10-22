@@ -95,21 +95,27 @@ class ViewController: UIViewController {
     }
     
     private func hideElements(_ isHidden: Bool) {
+        let duration: TimeInterval = 0.75
+        let delay: TimeInterval = 1
         
-        UIView.animate(withDuration: 1.2, delay: 0.5, animations: {
-            if isHidden {
+        if isHidden {
+            UIView.animate(withDuration: duration, delay: delay, animations: {
                 self.resetButton.alpha = 0
                 self.settingsButton.alpha = 0
-            } else {
-                self.resetButton.alpha = 0.99
-                self.settingsButton.alpha = 1
-            }
+            }, completion: {_ in
+                self.resetButton.isHidden = isHidden
+                self.settingsButton.isHidden = isHidden
+            } )
             
-        }, completion: {_ in
-            self.resetButton.isHidden = isHidden
-            self.settingsButton.isHidden = isHidden
-        } )
-        
+        } else {
+            UIView.animate(withDuration: duration, delay: delay, animations: {
+                self.resetButton.isHidden = isHidden
+                self.settingsButton.isHidden = isHidden
+
+                self.resetButton.alpha = 1
+                self.settingsButton.alpha = 1
+            })
+        }
     }
     
     @objc private func buttonTimerTapped() {
