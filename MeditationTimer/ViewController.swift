@@ -22,10 +22,44 @@ class ViewController: UIViewController {
     var timer: Timer? = nil
     
     let settingsVC = SettingsViewController()
+    let themeGetter = SetTheme(frame: UIScreen.main.bounds)
     
+    private lazy var defaultTheme: Theme = themeGetter.getDefaultTheme()
+    
+    private func applyNewTheme(_ theme: Theme) {
+        UIView.animate(withDuration: 0.25) {
+            self.view.backgroundColor = theme.background
+            self.timerLabel.textColor = theme.elements
+            self.updateTimerButton(theme.buttonConfigColors)
+        }
+    }
+    
+    @objc private func didSwipe(_ sender: UISwipeGestureRecognizer) {
+        switch sender.direction {
+        case .left:
+            if let newTheme = themeGetter.getNewTheme(next: true) {
+                applyNewTheme(newTheme)
+            }
+        default: // .right
+            if let newTheme = themeGetter.getNewTheme(next: false) {
+                applyNewTheme(newTheme)
+            }
+        }
+
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = defaultTheme.background
+        view.addSubview(themeGetter)
+        let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
+        rightSwipeGestureRecognizer.direction = .right
+        themeGetter.addGestureRecognizer(rightSwipeGestureRecognizer)
+
+        let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
+        leftSwipeGestureRecognizer.direction = .left
+        themeGetter.addGestureRecognizer(leftSwipeGestureRecognizer)
         
         
         timerLabel = UILabel()
@@ -45,7 +79,7 @@ class ViewController: UIViewController {
         timerButton = UIButton()
         timerButton.translatesAutoresizingMaskIntoConstraints = false
         timerButton.addTarget(self, action: #selector(buttonTimerTapped), for: .touchUpInside)
-        updateTimerButton()
+        updateTimerButton(nil)
         view.addSubview(timerButton)
         
         NSLayoutConstraint.activate([
@@ -56,7 +90,7 @@ class ViewController: UIViewController {
         
         resetButton = UIButton()
         resetButton.translatesAutoresizingMaskIntoConstraints = false
-        resetButton.tintColor = .systemGray
+        resetButton.tintColor = defaultTheme.elements
         resetButton.setImage(UIImage(systemName: "gobackward"), for: .normal)
         resetButton.addTarget(self, action: #selector(resetTime), for: .touchUpInside)
         resetButton.isHidden = true
@@ -73,14 +107,14 @@ class ViewController: UIViewController {
         settingButtonConfiguration.buttonSize = .medium
         settingsButton = UIButton(configuration: settingButtonConfiguration)
         settingsButton.translatesAutoresizingMaskIntoConstraints = false
-        settingsButton.tintColor = .systemGray
+        settingsButton.tintColor = defaultTheme.elements
         settingsButton.setImage(UIImage(systemName: "gearshape"), for: .normal)
         settingsButton.addTarget(self, action: #selector(settingsTapped), for: .touchUpInside)
         view.addSubview(settingsButton)
         
         NSLayoutConstraint.activate([
             settingsButton.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 16),
-            settingsButton.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor),
+            settingsButton.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor, constant: 16),
         ])
         
         addShadowToElements([timerLabel, resetButton])
@@ -145,7 +179,7 @@ class ViewController: UIViewController {
                 self.seconds = self.seconds + 1
             }
             self.setTextForTimerLabel()
-            self.updateTimerButton()
+            self.updateTimerButton(nil)
         }
     }
     
@@ -153,7 +187,7 @@ class ViewController: UIViewController {
         timerIsPaused = true
         timer?.invalidate()
         timer = nil
-        updateTimerButton()
+        updateTimerButton(nil)
     }
     
     private func setTextForTimerLabel() {
@@ -174,8 +208,8 @@ class ViewController: UIViewController {
         }
     }
     
-    private func updateTimerButton() {
-        var config = UIImage.SymbolConfiguration(paletteColors: [.systemGray, .systemGray3])
+    private func updateTimerButton(_ newColors: [UIColor]?) {
+        var config = UIImage.SymbolConfiguration(paletteColors: newColors ?? defaultTheme.buttonConfigColors)
         config = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 100)))
         config = config.applying(UIImage.SymbolConfiguration(weight: .ultraLight))
         
@@ -198,7 +232,7 @@ class ViewController: UIViewController {
     
     private func addShadowToElements(_ elements: [UIView]) {
         for view in elements {
-            view.layer.shadowColor = UIColor.systemGray.cgColor
+            view.layer.shadowColor = defaultTheme.shadow.cgColor
             view.layer.shadowOpacity = 50
             view.layer.shadowOffset = .zero
             view.layer.shadowRadius = 15
