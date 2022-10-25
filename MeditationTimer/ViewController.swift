@@ -73,9 +73,11 @@ class ViewController: UIViewController {
         view.addSubview(timerButton)
         
         NSLayoutConstraint.activate([
+//            timerButton.widthAnchor.constraint(equalToConstant: 150),
+            timerButton.heightAnchor.constraint(equalToConstant: 150),
             timerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            timerButton.topAnchor.constraint(equalTo: timerLabel.bottomAnchor),
-            timerButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
+            timerButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -30),
+            timerButton.topAnchor.constraint(equalTo: timerLabel.bottomAnchor, constant: 30),
         ])
         
         resetButton = UIButton()
@@ -83,7 +85,7 @@ class ViewController: UIViewController {
         resetButton.tintColor = defaultTheme.elements
         resetButton.setImage(UIImage(systemName: "gobackward"), for: .normal)
         resetButton.addTarget(self, action: #selector(resetTime), for: .touchUpInside)
-        resetButton.isHidden = true
+        resetButton.isHidden = false
         view.addSubview(resetButton)
         
         NSLayoutConstraint.activate([
