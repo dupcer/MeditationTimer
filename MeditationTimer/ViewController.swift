@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     var timerIsPaused: Bool = true
     var timer: Timer? = nil
     
+    let soundVC = SetTimerSoundViewController()
     let settingsVC = SettingsViewController()
     let themeGetter = SetTheme(frame: UIScreen.main.bounds)
     
@@ -39,8 +40,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.backgroundColor = defaultTheme.background
+        
         view.addSubview(themeGetter)
         let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
         rightSwipeGestureRecognizer.direction = .right
@@ -105,13 +107,25 @@ class ViewController: UIViewController {
         view.addSubview(settingsButton)
         
         NSLayoutConstraint.activate([
-            settingsButton.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 16),
-            settingsButton.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor, constant: 16),
+            settingsButton.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
+            settingsButton.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor),
         ])
         
         addShadowToElements([timerLabel, resetButton])
         
-
+        
+        addChild(soundVC)
+        view.addSubview(soundVC.view)
+        
+        soundVC.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            soundVC.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            soundVC.view.bottomAnchor.constraint(equalTo: timerLabel.topAnchor),
+            soundVC.view.widthAnchor.constraint(equalToConstant: 150),
+            soundVC.view.heightAnchor.constraint(equalToConstant: 50),
+        ])
+        
+        
 
     }
     
