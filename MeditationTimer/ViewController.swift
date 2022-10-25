@@ -158,6 +158,7 @@ class ViewController: UIViewController {
     
     private func startTimer(){
         timerIsPaused = false
+        updateTimerButton()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ tempTimer in
             if self.seconds == 59 {
                 self.seconds = 0
@@ -171,15 +172,14 @@ class ViewController: UIViewController {
                 self.seconds = self.seconds + 1
             }
             self.setTextForTimerLabel()
-            self.updateTimerButton()
         }
     }
     
     private func stopTimer(){
         timerIsPaused = true
+        updateTimerButton()
         timer?.invalidate()
         timer = nil
-        updateTimerButton()
     }
     
     private func setTextForTimerLabel() {
