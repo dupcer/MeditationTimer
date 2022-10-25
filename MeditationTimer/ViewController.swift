@@ -24,29 +24,18 @@ class ViewController: UIViewController {
     let settingsVC = SettingsViewController()
     let themeGetter = SetTheme(frame: UIScreen.main.bounds)
     
-    private lazy var defaultTheme: Theme = themeGetter.getDefaultTheme()
-    
-    private func applyNewTheme(_ theme: Theme) {
-        UIView.animate(withDuration: 0.25) {
-            self.view.backgroundColor = theme.background
-            self.timerLabel.textColor = theme.elements
-            self.updateTimerButton(theme.buttonConfigColors)
+    private var defaultTheme: Theme {
+        get {
+            themeGetter.getDefaultTheme()
         }
     }
     
-    @objc private func didSwipe(_ sender: UISwipeGestureRecognizer) {
-        switch sender.direction {
-        case .left:
-            if let newTheme = themeGetter.getNewTheme(next: true) {
-                applyNewTheme(newTheme)
-            }
-        default: // .right
-            if let newTheme = themeGetter.getNewTheme(next: false) {
-                applyNewTheme(newTheme)
-            }
+    private var timerButtonConfig: UIImage.SymbolConfiguration? = nil {
+        willSet {
+            self.timerButtonConfig = newValue
         }
+    }
 
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,11 +50,12 @@ class ViewController: UIViewController {
         leftSwipeGestureRecognizer.direction = .left
         themeGetter.addGestureRecognizer(leftSwipeGestureRecognizer)
         
+        timerButtonConfig = themeGetter.getDefaultTheme().buttonConfig
         
         timerLabel = UILabel()
         timerLabel.translatesAutoresizingMaskIntoConstraints = false
         timerLabel.textAlignment = .center
-        timerLabel.font = UIFont.systemFont(ofSize: 62, weight: .ultraLight)
+        timerLabel.font = defaultTheme.font
         
         setTextForTimerLabel()
         view.addSubview(timerLabel)
@@ -79,7 +69,7 @@ class ViewController: UIViewController {
         timerButton = UIButton()
         timerButton.translatesAutoresizingMaskIntoConstraints = false
         timerButton.addTarget(self, action: #selector(buttonTimerTapped), for: .touchUpInside)
-        updateTimerButton(nil)
+        updateTimerButton()
         view.addSubview(timerButton)
         
         NSLayoutConstraint.activate([
@@ -179,7 +169,7 @@ class ViewController: UIViewController {
                 self.seconds = self.seconds + 1
             }
             self.setTextForTimerLabel()
-            self.updateTimerButton(nil)
+            self.updateTimerButton()
         }
     }
     
@@ -187,7 +177,7 @@ class ViewController: UIViewController {
         timerIsPaused = true
         timer?.invalidate()
         timer = nil
-        updateTimerButton(nil)
+        updateTimerButton()
     }
     
     private func setTextForTimerLabel() {
@@ -208,16 +198,11 @@ class ViewController: UIViewController {
         }
     }
     
-    private func updateTimerButton(_ newColors: [UIColor]?) {
-        var config = UIImage.SymbolConfiguration(paletteColors: newColors ?? defaultTheme.buttonConfigColors)
-        config = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 100)))
-        config = config.applying(UIImage.SymbolConfiguration(weight: .ultraLight))
-        
-        
+    private func updateTimerButton() {
         self.timerButton.setImage(
             timerIsPaused ?
-            UIImage(systemName: "play.circle", withConfiguration: config) :
-            UIImage(systemName: "pause.circle", withConfiguration: config),
+            UIImage(systemName: "play.circle", withConfiguration: timerButtonConfig) :
+            UIImage(systemName: "pause.circle", withConfiguration: timerButtonConfig),
             for: .normal
         )
     }
@@ -247,6 +232,37 @@ class ViewController: UIViewController {
             
         }
         self.present(settingsVC, animated: true, completion: nil)
+    }
+    
+    
+    private func applyNewTheme(_ theme: Theme, next animateToRight: Bool) {
+        UIView.transition(
+            with: self.view,
+            duration: 0.3,
+          options: animateToRight ? .transitionFlipFromRight : .transitionFlipFromLeft,
+            animations: {
+                self.view.backgroundColor = theme.background
+                self.timerLabel.textColor = theme.elements
+                self.timerLabel.font = theme.font
+                self.timerButtonConfig = theme.buttonConfig
+                self.updateTimerButton()
+                self.resetButton.tintColor = theme.elements
+                self.settingsButton.tintColor = theme.elements
+            }
+        )
+    }
+    
+    @objc private func didSwipe(_ sender: UISwipeGestureRecognizer) {
+        switch sender.direction {
+        case .left:
+            if let newTheme = themeGetter.getNewTheme(next: true) {
+                applyNewTheme(newTheme, next: true)
+            }
+        default: // .right
+            if let newTheme = themeGetter.getNewTheme(next: false) {
+                applyNewTheme(newTheme, next: false)
+            }
+        }
     }
     
 
