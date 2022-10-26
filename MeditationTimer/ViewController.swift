@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     var timerIsPaused: Bool = true
     var timer: Timer? = nil
     
-    let soundVC = SetTimerSoundViewController()
+    let timerTimesListVC = TimerTimesListViewController()
     let settingsVC = SettingsViewController()
     let themeGetter = SetTheme(frame: UIScreen.main.bounds)
     
@@ -114,15 +114,15 @@ class ViewController: UIViewController {
         addShadowToElements([timerLabel, resetButton])
         
         
-        addChild(soundVC)
-        view.addSubview(soundVC.view)
+        addChild(timerTimesListVC)
+        view.addSubview(timerTimesListVC.view)
         
-        soundVC.view.translatesAutoresizingMaskIntoConstraints = false
+        timerTimesListVC.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            soundVC.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            soundVC.view.bottomAnchor.constraint(equalTo: timerLabel.topAnchor),
-            soundVC.view.widthAnchor.constraint(equalToConstant: 150),
-            soundVC.view.heightAnchor.constraint(equalToConstant: 50),
+            timerTimesListVC.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            timerTimesListVC.view.bottomAnchor.constraint(equalTo: timerLabel.topAnchor),
+            timerTimesListVC.view.widthAnchor.constraint(equalToConstant: 150),
+            timerTimesListVC.view.heightAnchor.constraint(equalToConstant: 50),
         ])
         
         
@@ -266,6 +266,7 @@ class ViewController: UIViewController {
                 self.settingsButton.tintColor = theme.elements
             }
         )
+        timerTimesListVC.setNewTheme(theme)
     }
     
     @objc private func didSwipe(_ sender: UISwipeGestureRecognizer) {
