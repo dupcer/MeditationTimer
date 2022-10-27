@@ -57,7 +57,7 @@ fileprivate let defaultTheme = Theme(background: .systemBackground, shadow: .sys
 
 fileprivate let blackTheme = Theme(background: UIColor.black, shadow: .systemGray, elements: .systemGray, buttonConfig: UIImage.SymbolConfiguration(paletteColors: [.darkGray]).applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 100))).applying(UIImage.SymbolConfiguration(weight: .ultraLight)))
 
-fileprivate let blackRedTheme = Theme(background: UIColor.black, shadow: .systemPink, elements: .red, buttonConfig: UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.66165483, green: 0.1116623357, blue: 0.03887774795, alpha: 1), .red]).applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 100))).applying(UIImage.SymbolConfiguration(weight: .ultraLight)))
+fileprivate let blackRedTheme = Theme(background: UIColor.black, shadow: .systemPink, elements: .red, buttonConfig: UIImage.SymbolConfiguration(paletteColors: [.red,  #colorLiteral(red: 0.66165483, green: 0.1116623357, blue: 0.03887774795, alpha: 1)]).applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 100))).applying(UIImage.SymbolConfiguration(weight: .ultraLight)))
 
 fileprivate let whiteTheme = Theme(background: UIColor.white, shadow: .systemGray, elements: .black, buttonConfig: UIImage.SymbolConfiguration(paletteColors: [.black, .systemGray]).applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 100))).applying(UIImage.SymbolConfiguration(weight: .ultraLight)))
 

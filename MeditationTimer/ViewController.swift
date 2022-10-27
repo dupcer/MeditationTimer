@@ -87,7 +87,7 @@ class ViewController: UIViewController {
         resetButton.tintColor = defaultTheme.elements
         resetButton.setImage(UIImage(systemName: "gobackward"), for: .normal)
         resetButton.addTarget(self, action: #selector(resetTime), for: .touchUpInside)
-        resetButton.isHidden = false
+        resetButton.isHidden = true
         view.addSubview(resetButton)
         
         NSLayoutConstraint.activate([
@@ -108,12 +108,14 @@ class ViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             settingsButton.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
-            settingsButton.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor),
+            settingsButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
         ])
         
         addShadowToElements([timerLabel, resetButton])
         
-        
+        timerTimesListVC.view.isUserInteractionEnabled = true
+        let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(settingsTapped))
+        timerTimesListVC.view.addGestureRecognizer(guestureRecognizer)
         addChild(timerTimesListVC)
         view.addSubview(timerTimesListVC.view)
         

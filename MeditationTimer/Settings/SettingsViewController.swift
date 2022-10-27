@@ -8,15 +8,14 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
-    var timePicker: UIDatePicker!
+    var setTimerVC: SetTimerViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .orange
+        self.view.backgroundColor = .secondarySystemBackground
         
-        timePicker = UIDatePicker()
-        timePicker.datePickerMode = .countDownTimer
-//        timePicker.datePickerStyle = .wheels
+        setTimerVC = SetTimerViewController()
+        view.addSubview(setTimerVC.view)
         
     }
 

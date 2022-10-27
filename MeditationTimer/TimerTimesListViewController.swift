@@ -24,7 +24,7 @@ class TimerTimesListViewController: UIViewController {
 
         theme = themeGetter.getDefaultTheme()
         
-        timerSign = UIImage(systemName: "stopwatch.fill") ?? UIImage(named:"timerSign")
+        timerSign = UIImage(systemName: "stopwatch") ?? UIImage(named:"timerSign")
         
         timerSignImageView = UIImageView(image: timerSign)
         timerSignImageView.tintColor = theme.shadow
@@ -66,7 +66,7 @@ class TimerTimesListViewController: UIViewController {
         }
         
         if timerTextToSet == "" {
-            timerTextToSet = "--:--"
+            timerTextToSet = "--:-- min"
         }
         
         self.label.text = timerTextToSet
