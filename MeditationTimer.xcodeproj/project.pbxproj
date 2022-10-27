@@ -12,6 +12,7 @@
 		775D49AA2906F54F00FE4A59 /* SetTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D49A92906F54F00FE4A59 /* SetTheme.swift */; };
 		7765D73329086A8900430F30 /* TimerTimesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7765D73229086A8900430F30 /* TimerTimesListViewController.swift */; };
 		7765D735290AE0E100430F30 /* SetTimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7765D734290AE0E100430F30 /* SetTimerViewController.swift */; };
+		7765D737290B1CB700430F30 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7765D736290B1CB700430F30 /* SettingsTableViewController.swift */; };
 		77CBB46129014BF000A4D3B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CBB46029014BF000A4D3B0 /* AppDelegate.swift */; };
 		77CBB46329014BF000A4D3B0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CBB46229014BF000A4D3B0 /* SceneDelegate.swift */; };
 		77CBB46529014BF000A4D3B0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CBB46429014BF000A4D3B0 /* ViewController.swift */; };
@@ -26,6 +27,7 @@
 		775D49A92906F54F00FE4A59 /* SetTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTheme.swift; sourceTree = "<group>"; };
 		7765D73229086A8900430F30 /* TimerTimesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerTimesListViewController.swift; sourceTree = "<group>"; };
 		7765D734290AE0E100430F30 /* SetTimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTimerViewController.swift; sourceTree = "<group>"; };
+		7765D736290B1CB700430F30 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		77CBB45D29014BF000A4D3B0 /* MeditationTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeditationTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77CBB46029014BF000A4D3B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		77CBB46229014BF000A4D3B0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -52,6 +54,7 @@
 			children = (
 				774B01DA2902F0AD00456853 /* SettingsViewController.swift */,
 				7765D734290AE0E100430F30 /* SetTimerViewController.swift */,
+				7765D736290B1CB700430F30 /* SettingsTableViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -177,6 +180,7 @@
 				77CBB46129014BF000A4D3B0 /* AppDelegate.swift in Sources */,
 				77CBB46329014BF000A4D3B0 /* SceneDelegate.swift in Sources */,
 				775D49AA2906F54F00FE4A59 /* SetTheme.swift in Sources */,
+				7765D737290B1CB700430F30 /* SettingsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

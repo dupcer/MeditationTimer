@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     var timer: Timer? = nil
     
     let timerTimesListVC = TimerTimesListViewController()
-    let settingsVC = SettingsViewController()
+    let settingsVC = SettingsTableViewController()
     let themeGetter = SetTheme(frame: UIScreen.main.bounds)
     
     private var defaultTheme: Theme {

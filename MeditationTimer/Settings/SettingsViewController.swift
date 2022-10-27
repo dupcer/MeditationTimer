@@ -12,10 +12,9 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .secondarySystemBackground
+        self.view.backgroundColor = .secondarySystemFill
         
-        setTimerVC = SetTimerViewController()
-        view.addSubview(setTimerVC.view)
+        
         
     }
 
