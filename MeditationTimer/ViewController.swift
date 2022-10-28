@@ -106,7 +106,9 @@ class ViewController: UIViewController {
         settingsButton = UIButton(configuration: settingButtonConfiguration)
         settingsButton.translatesAutoresizingMaskIntoConstraints = false
         settingsButton.tintColor = defaultTheme.elements
-        settingsButton.setImage(UIImage(systemName: "gearshape"), for: .normal)
+        let config = UIImage.SymbolConfiguration(weight: .bold)
+        let image = UIImage(systemName: "line.3.horizontal", withConfiguration: config)
+        settingsButton.setImage(image, for: .normal )
         settingsButton.addTarget(self, action: #selector(showSettings), for: .touchUpInside)
         view.addSubview(settingsButton)
         

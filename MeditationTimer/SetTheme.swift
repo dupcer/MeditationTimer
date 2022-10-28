@@ -19,6 +19,11 @@ class SetTheme: UIView {
         return listOfThemes[lastUsedThemeIndex]
     }
     
+    func getCurrentTheme() -> Theme {
+        return listOfThemes[currentThemeIndex]
+    }
+    
+    
     func getNewTheme(next: Bool) -> Theme? {
         if next, listOfThemes.count > currentThemeIndex+1 {
             currentThemeIndex += 1

@@ -17,17 +17,20 @@ class TimerTimesListViewController: UIViewController {
     var label: UILabel!
         
     let themeGetter = SetTheme()
-    var theme: Theme!
+    var theme: Theme? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        theme = themeGetter.getDefaultTheme()
+        if theme == nil  {
+            theme = themeGetter.getDefaultTheme()
+
+        }
         
         timerSign = UIImage(systemName: "stopwatch") ?? UIImage(named:"timerSign")
         
         timerSignImageView = UIImageView(image: timerSign)
-        timerSignImageView.tintColor = theme.shadow
+        timerSignImageView.tintColor = theme?.shadow
         timerSignImageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(timerSignImageView)
         
@@ -40,7 +43,7 @@ class TimerTimesListViewController: UIViewController {
         label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.textColor = theme.elements
+        label.textColor = theme?.elements
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         setListOfTimerTimes(listOfTimerTimes)
         view.addSubview(label)
@@ -78,8 +81,8 @@ class TimerTimesListViewController: UIViewController {
     }
     
     private func applyNewTheme() {
-        timerSignImageView.tintColor = theme.shadow
-        label.textColor = theme.elements
+        timerSignImageView.tintColor = theme?.shadow
+        label.textColor = theme?.elements
     }
 
 }
