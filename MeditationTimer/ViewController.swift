@@ -247,13 +247,13 @@ class ViewController: UIViewController {
     }
     
     @objc private func showSettings() {
-        settingsVC.modalPresentationStyle = .pageSheet
-        if let sheet = settingsVC.sheetPresentationController {
+        let navVC = UINavigationController(rootViewController: settingsVC)
+        navVC.modalPresentationStyle = .pageSheet
+        if let sheet = navVC.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.prefersGrabberVisible = true
-            
         }
-        self.present(settingsVC, animated: true, completion: nil)
+        self.present(navVC, animated: true, completion: nil)
     }
     
     

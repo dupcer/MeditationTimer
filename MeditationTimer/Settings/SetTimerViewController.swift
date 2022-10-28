@@ -24,6 +24,7 @@ class SetTimerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.view.backgroundColor = .secondarySystemBackground
         switchButton = UISwitch()
         switchButton.translatesAutoresizingMaskIntoConstraints = false
         switchButton.isUserInteractionEnabled = true

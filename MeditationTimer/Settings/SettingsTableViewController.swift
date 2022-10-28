@@ -70,9 +70,9 @@ class SettingsTableViewController: UITableViewController, UINavigationController
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        super.tableView(tableView, didSelectRowAt: indexPath)
-        print(self.navigationController ?? "it's nil")
-        
+        let setTimerVC = SetTimerViewController()
+        let navVC = UINavigationController(rootViewController: setTimerVC)
+        navigationController?.pushViewController(setTimerVC, animated: true)
     }
     
     
