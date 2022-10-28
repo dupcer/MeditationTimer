@@ -9,7 +9,8 @@ import UIKit
 
 class SettingsTableViewController: UITableViewController, UINavigationControllerDelegate {
 
-
+    let modelTimer = ModelTimer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "settingsTableCell")
@@ -44,7 +45,11 @@ class SettingsTableViewController: UITableViewController, UINavigationController
         
         if indexPath.section == 0 {
             content.text = "Azazaz"
-            content.secondaryText = "--:-- min"
+            if let list = modelTimer.getListOfTimersForSound() {
+                content.secondaryText = "\(list[0].hour):\(list[0].minute) min"
+            } else {
+                content.secondaryText = "--:-- min"
+            }
             content.image = UIImage(systemName: "stopwatch")?.withTintColor(.label, renderingMode: .alwaysOriginal)
         } else if indexPath.section == 1 {
             content.text = "Ololol"

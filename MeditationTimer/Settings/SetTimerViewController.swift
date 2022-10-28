@@ -82,4 +82,18 @@ class SetTimerViewController: UIViewController {
         timePicker.isHidden = !newValue
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        if !isSwitchOn {
+            return
+        }
+        
+        let date = timePicker.date
+        let components = Calendar.current.dateComponents([.hour, .minute], from: date)
+        let timerForSound = TimerForSound(hour: UInt(components.hour!), minute: UInt(components.minute!))
+        
+        let modelTimer = ModelTimer()
+        modelTimer.addNewTimerToList(timerForSound)
+    }
+    
 }

@@ -15,9 +15,9 @@ class ViewController: UIViewController {
     var timerButton: UIButton!
     var resetButton: UIButton!
     
-    var hours: Int = 0
-    var minutes: Int = 0
-    var seconds: Int = 0
+    var hours: UInt = 0
+    var minutes: UInt = 0
+    var seconds: UInt = 0
     var timerIsPaused: Bool = true
     var timer: Timer? = nil
     
@@ -181,7 +181,8 @@ class ViewController: UIViewController {
     private func startTimer(){
         timerIsPaused = false
         updateTimerButton()
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ tempTimer in
+        timer?.tolerance = 1.0
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ _ in
             if self.seconds == 59 {
                 self.seconds = 0
                 if self.minutes == 59 {
@@ -195,6 +196,7 @@ class ViewController: UIViewController {
             }
             self.setTextForTimerLabel()
         }
+        
     }
     
     private func stopTimer(){
