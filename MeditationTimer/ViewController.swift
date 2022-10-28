@@ -51,6 +51,10 @@ class ViewController: UIViewController {
         let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
         leftSwipeGestureRecognizer.direction = .left
         themeGetter.addGestureRecognizer(leftSwipeGestureRecognizer)
+
+        let swipeUpGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(showSettings))
+        swipeUpGestureRecognizer.direction = .up
+        themeGetter.addGestureRecognizer(swipeUpGestureRecognizer)
         
         timerButtonConfig = themeGetter.getDefaultTheme().buttonConfig
         
@@ -103,7 +107,7 @@ class ViewController: UIViewController {
         settingsButton.translatesAutoresizingMaskIntoConstraints = false
         settingsButton.tintColor = defaultTheme.elements
         settingsButton.setImage(UIImage(systemName: "gearshape"), for: .normal)
-        settingsButton.addTarget(self, action: #selector(settingsTapped), for: .touchUpInside)
+        settingsButton.addTarget(self, action: #selector(showSettings), for: .touchUpInside)
         view.addSubview(settingsButton)
         
         NSLayoutConstraint.activate([
@@ -114,7 +118,7 @@ class ViewController: UIViewController {
         addShadowToElements([timerLabel, resetButton])
         
         timerTimesListVC.view.isUserInteractionEnabled = true
-        let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(settingsTapped))
+        let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showSettings))
         timerTimesListVC.view.addGestureRecognizer(guestureRecognizer)
         addChild(timerTimesListVC)
         view.addSubview(timerTimesListVC.view)
@@ -242,7 +246,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc private func settingsTapped() {
+    @objc private func showSettings() {
         settingsVC.modalPresentationStyle = .pageSheet
         if let sheet = settingsVC.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
