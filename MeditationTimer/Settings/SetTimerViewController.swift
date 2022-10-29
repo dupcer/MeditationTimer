@@ -12,7 +12,12 @@ class SetTimerViewController: UIViewController {
     let modelTimer: ModelTimer
     let indexOfCellToSetTimerFor: Int
     private var modelTimerThatWasSetBefore: TimerForSound? {
-        return modelTimer.getListOfTimersForSound()?[indexOfCellToSetTimerFor] ?? nil
+        if let list = modelTimer.getListOfTimersForSound() {
+            if list.indices.contains(indexOfCellToSetTimerFor) {
+                return list[indexOfCellToSetTimerFor]
+            }
+        }
+        return nil
     }
     
     init(modelTimer: ModelTimer, indexOfCellToSetTimerFor: Int) {
@@ -85,9 +90,7 @@ class SetTimerViewController: UIViewController {
         timePicker.datePickerMode = .countDownTimer
         if isSwitchOn {
             if let model = modelTimerThatWasSetBefore {
-                let seconds: Double = Double( ((model.hour * 60) + model.minute) * 60 )
-                timePicker.countDownDuration = seconds
-
+                timePicker.countDownDuration = model.totalAmountOfSeconds
             }
         }
         

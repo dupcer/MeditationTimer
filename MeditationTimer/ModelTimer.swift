@@ -38,7 +38,7 @@ class ModelTimer {
 
 struct TimerForSound: Comparable {
     static func < (lhs: TimerForSound, rhs: TimerForSound) -> Bool {
-        lhs.numberToOrder < rhs.numberToOrder
+        lhs.totalAmountOfSeconds < rhs.totalAmountOfSeconds
     }
     
     var hour: UInt
@@ -49,7 +49,7 @@ struct TimerForSound: Comparable {
         self.minute = minute
     }
     
-    fileprivate var numberToOrder: Int {
-        return Int(hour)*100 + Int(minute)
+    var totalAmountOfSeconds: Double {
+        return Double( ((hour * 60) + minute) * 60 )
     }
 }
