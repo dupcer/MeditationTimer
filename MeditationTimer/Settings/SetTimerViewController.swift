@@ -11,6 +11,9 @@ class SetTimerViewController: UIViewController {
 
     let modelTimer: ModelTimer
     let indexOfCellToSetTimerFor: Int
+    private var modelTimerThatWasSetBefore: TimerForSound? {
+        return modelTimer.getListOfTimersForSound()?[indexOfCellToSetTimerFor] ?? nil
+    }
     
     init(modelTimer: ModelTimer, indexOfCellToSetTimerFor: Int) {
         self.modelTimer = modelTimer
@@ -41,6 +44,9 @@ class SetTimerViewController: UIViewController {
         switchButton = UISwitch()
         switchButton.translatesAutoresizingMaskIntoConstraints = false
         switchButton.isUserInteractionEnabled = true
+        if modelTimerThatWasSetBefore != nil {
+            isSwitchOn = true
+        }
         switchButton.isOn = isSwitchOn
         switchButton.addTarget(self, action: #selector(switchValueDidChange(_:)), for: .valueChanged)
 
@@ -77,6 +83,14 @@ class SetTimerViewController: UIViewController {
         timePicker.translatesAutoresizingMaskIntoConstraints = false
         isSwitchOn ? (timePicker.isHidden = false) : (timePicker.isHidden = true)
         timePicker.datePickerMode = .countDownTimer
+        if isSwitchOn {
+            if let model = modelTimerThatWasSetBefore {
+                let seconds: Double = Double( ((model.hour * 60) + model.minute) * 60 )
+                timePicker.countDownDuration = seconds
+
+            }
+        }
+        
         view.addSubview(timePicker)
         
         NSLayoutConstraint.activate([
@@ -104,7 +118,7 @@ class SetTimerViewController: UIViewController {
         
         let date = timePicker.date
         let components = Calendar.current.dateComponents([.hour, .minute], from: date)
-        let timerForSound = TimerForSound(hour: UInt(components.hour!), minute: UInt(components.minute!))
+        let timerForSound = TimerForSound(hour: UInt(components.hour ?? 0), minute: UInt(components.minute ?? 1))
         
         modelTimer.addNewTimerToList(timerForSound, indexPathItem: indexOfCellToSetTimerFor)
     }
