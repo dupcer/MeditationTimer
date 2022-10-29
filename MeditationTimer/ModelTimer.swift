@@ -12,9 +12,14 @@ class ModelTimer {
     private var currentTimeHours: UInt = 0
     private var currentTimeMinutes: UInt = 0
     
-    private var listOfTimersForSound: [TimerForSound?] = []
+    private var listOfTimersForSound: [TimerForSound] = [] {
+        didSet {
+            listOfTimersForSound.sort()
+        }
+    }
+
     
-    func addNewTimerToList(_ newValue: TimerForSound) {
+    func addNewTimerToList(_ newValue: TimerForSound, indexPathItem withIndex: Int) {
         listOfTimersForSound.append(newValue)
     }
     
@@ -22,12 +27,25 @@ class ModelTimer {
         if listOfTimersForSound.isEmpty {
             return nil
         }
-        return listOfTimersForSound.map({ $0! })
+        return listOfTimersForSound
     }
 }
 
 
-struct TimerForSound {
+struct TimerForSound: Comparable {
+    static func < (lhs: TimerForSound, rhs: TimerForSound) -> Bool {
+        lhs.numberToOrder < rhs.numberToOrder
+    }
+    
     var hour: UInt
     var minute: UInt
+    
+    init(hour: UInt, minute: UInt) {
+        self.hour = hour
+        self.minute = minute
+    }
+    
+    fileprivate var numberToOrder: Int {
+        return Int(hour)*100 + Int(minute)
+    }
 }

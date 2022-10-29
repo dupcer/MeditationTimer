@@ -9,6 +9,17 @@ import UIKit
 
 class SetTimerViewController: UIViewController {
 
+    let modelTimer: ModelTimer
+    
+    init(modelTimer: ModelTimer) {
+        self.modelTimer = modelTimer
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private var switchButton: UISwitch!
     var isSwitchOn: Bool = false
     
@@ -82,8 +93,9 @@ class SetTimerViewController: UIViewController {
         timePicker.isHidden = !newValue
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        
         if !isSwitchOn {
             return
         }
@@ -92,8 +104,9 @@ class SetTimerViewController: UIViewController {
         let components = Calendar.current.dateComponents([.hour, .minute], from: date)
         let timerForSound = TimerForSound(hour: UInt(components.hour!), minute: UInt(components.minute!))
         
-        let modelTimer = ModelTimer()
         modelTimer.addNewTimerToList(timerForSound)
     }
+    
+    
     
 }
