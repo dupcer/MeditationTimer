@@ -10,9 +10,11 @@ import UIKit
 class SetTimerViewController: UIViewController {
 
     let modelTimer: ModelTimer
+    let indexOfCellToSetTimerFor: Int
     
-    init(modelTimer: ModelTimer) {
+    init(modelTimer: ModelTimer, indexOfCellToSetTimerFor: Int) {
         self.modelTimer = modelTimer
+        self.indexOfCellToSetTimerFor = indexOfCellToSetTimerFor
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -104,7 +106,7 @@ class SetTimerViewController: UIViewController {
         let components = Calendar.current.dateComponents([.hour, .minute], from: date)
         let timerForSound = TimerForSound(hour: UInt(components.hour!), minute: UInt(components.minute!))
         
-        modelTimer.addNewTimerToList(timerForSound)
+        modelTimer.addNewTimerToList(timerForSound, indexPathItem: indexOfCellToSetTimerFor)
     }
     
     

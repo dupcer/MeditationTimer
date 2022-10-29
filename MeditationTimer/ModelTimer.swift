@@ -19,8 +19,12 @@ class ModelTimer {
     }
 
     
-    func addNewTimerToList(_ newValue: TimerForSound, indexPathItem withIndex: Int) {
-        listOfTimersForSound.append(newValue)
+    func addNewTimerToList(_ newValue: TimerForSound, indexPathItem index: Int) {
+        if index > listOfTimersForSound.count-1 {
+            listOfTimersForSound.append(newValue)
+        } else {
+            listOfTimersForSound[index] = newValue
+        }
     }
     
     func getListOfTimersForSound() -> [TimerForSound]? {
