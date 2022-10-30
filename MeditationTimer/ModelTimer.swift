@@ -9,16 +9,12 @@ import Foundation
 
 class ModelTimer {
     
-    private var currentTimeHours: UInt = 0
-    private var currentTimeMinutes: UInt = 0
-    
     private var listOfTimersForSound: [TimerForSound] = [] {
         didSet {
             listOfTimersForSound.sort()
         }
     }
 
-    
     func addNewTimerToList(_ newValue: TimerForSound, indexPathItem index: Int) {
         if index > listOfTimersForSound.count-1 {
             listOfTimersForSound.append(newValue)
@@ -32,6 +28,12 @@ class ModelTimer {
             return nil
         }
         return listOfTimersForSound
+    }
+    
+    func removeTimerFromList(_ index: Int) {
+        if listOfTimersForSound.indices.contains(index) {
+            listOfTimersForSound.remove(at: index)
+        }
     }
 }
 

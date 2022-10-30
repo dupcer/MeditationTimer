@@ -54,7 +54,7 @@ class SettingsTableViewController: UITableViewController, UINavigationController
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            guard let numberOfElementsInList =  modelTimer.getListOfTimersForSound()?.count else {
+            guard let numberOfElementsInList = modelTimer.getListOfTimersForSound()?.count else {
                 return 1
             }
             if numberOfElementsInList >= 3 {

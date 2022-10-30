@@ -18,6 +18,7 @@
 		77CBB46529014BF000A4D3B0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CBB46429014BF000A4D3B0 /* ViewController.swift */; };
 		77CBB46A29014BF200A4D3B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77CBB46929014BF200A4D3B0 /* Assets.xcassets */; };
 		77CBB46D29014BF200A4D3B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77CBB46B29014BF200A4D3B0 /* LaunchScreen.storyboard */; };
+		77DF9C1B290E70EE003F1443 /* DisplayFormatedTimeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF9C1A290E70EE003F1443 /* DisplayFormatedTimeExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		77CBB46929014BF200A4D3B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		77CBB46C29014BF200A4D3B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		77CBB46E29014BF200A4D3B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		77DF9C1A290E70EE003F1443 /* DisplayFormatedTimeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayFormatedTimeExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 				77CBB46229014BF000A4D3B0 /* SceneDelegate.swift */,
 				77CBB46B29014BF200A4D3B0 /* LaunchScreen.storyboard */,
 				774B01D629019DCF00456853 /* UIFont+CustomFont.swift */,
+				77DF9C1A290E70EE003F1443 /* DisplayFormatedTimeExtension.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				774B01D729019DCF00456853 /* UIFont+CustomFont.swift in Sources */,
+				77DF9C1B290E70EE003F1443 /* DisplayFormatedTimeExtension.swift in Sources */,
 				7765D73B290C6D7B00430F30 /* ModelTimer.swift in Sources */,
 				7765D73329086A8900430F30 /* TimerTimesListViewController.swift in Sources */,
 				7765D735290AE0E100430F30 /* SetTimerViewController.swift in Sources */,

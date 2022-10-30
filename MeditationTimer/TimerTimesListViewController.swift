@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TimerTimesListViewController: UIViewController {
+class TimerTimesListViewController: UIViewController, DisplayFormatedTimeExtension {
 
     private var listOfTimerTimes: [String] = []
     
@@ -24,7 +24,6 @@ class TimerTimesListViewController: UIViewController {
 
         if theme == nil  {
             theme = themeGetter.getDefaultTheme()
-
         }
         
         timerSign = UIImage(systemName: "stopwatch") ?? UIImage(named:"timerSign")

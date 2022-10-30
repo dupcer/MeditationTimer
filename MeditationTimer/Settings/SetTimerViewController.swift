@@ -115,8 +115,10 @@ class SetTimerViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
-        if !isSwitchOn {
+        if !isSwitchOn, modelTimerThatWasSetBefore == nil {
             return
+        } else if !isSwitchOn {
+            return modelTimer.removeTimerFromList(indexOfCellToSetTimerFor)
         }
         
         let date = timePicker.date
