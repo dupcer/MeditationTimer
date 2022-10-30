@@ -123,7 +123,11 @@ class SetTimerViewController: UIViewController {
         
         let date = timePicker.date
         let components = Calendar.current.dateComponents([.hour, .minute], from: date)
-        let timerForSound = TimerForSound(hour: UInt(components.hour ?? 0), minute: UInt(components.minute ?? 1))
+        var min: UInt = 1
+        if let compMin = components.minute, compMin > 0 {
+            min = UInt(compMin)
+        }
+        let timerForSound = TimerForSound(hour: UInt(components.hour ?? 0), minute: min)
         
         modelTimer.addNewTimerToList(timerForSound, indexPathItem: indexOfCellToSetTimerFor)
     }

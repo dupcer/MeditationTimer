@@ -7,18 +7,9 @@
 
 import UIKit
 
-class SettingsTableViewController: UITableViewController, UINavigationControllerDelegate {
+class SettingsTableViewController: UITableViewController, UINavigationControllerDelegate, DisplayFormatedTimeExtension {
 
-    let modelTimer: ModelTimer
-    
-    init(modelTimer: ModelTimer) {
-        self.modelTimer = modelTimer
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    weak var vcToUpdate: MainScreenTimersListViewController? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +24,12 @@ class SettingsTableViewController: UITableViewController, UINavigationController
 
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
-        
+        if let vcToUpdate = vcToUpdate {
+            vcToUpdate.setListOfTimerTimes()
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -54,7 +47,7 @@ class SettingsTableViewController: UITableViewController, UINavigationController
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            guard let numberOfElementsInList = modelTimer.getListOfTimersForSound()?.count else {
+            guard let numberOfElementsInList = ModelTimer.shared.getListOfTimersForSound()?.count else {
                 return 1
             }
             if numberOfElementsInList >= 3 {
@@ -96,7 +89,7 @@ class SettingsTableViewController: UITableViewController, UINavigationController
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let setTimerVC = SetTimerViewController(modelTimer: modelTimer, indexOfCellToSetTimerFor: indexPath.item)
+        let setTimerVC = SetTimerViewController(modelTimer: ModelTimer.shared, indexOfCellToSetTimerFor: indexPath.item)
         _ = UINavigationController(rootViewController: setTimerVC)
         navigationController?.pushViewController(setTimerVC, animated: true)
     }
@@ -112,7 +105,7 @@ class SettingsTableViewController: UITableViewController, UINavigationController
     private func populateTimerCellWithContent(_ content: inout UIListContentConfiguration, indexPath: IndexPath) {
         content.text = "Timer"
 
-        if let list = modelTimer.getListOfTimersForSound() {
+        if let list = ModelTimer.shared.getListOfTimersForSound() {
             if list.count > indexPath.item {
                 content.secondaryText = "\(list[indexPath.item].hour):\(list[indexPath.item].minute) min"
             }

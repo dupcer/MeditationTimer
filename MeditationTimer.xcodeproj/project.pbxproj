@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		774B01D729019DCF00456853 /* UIFont+CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774B01D629019DCF00456853 /* UIFont+CustomFont.swift */; };
 		775D49AA2906F54F00FE4A59 /* SetTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D49A92906F54F00FE4A59 /* SetTheme.swift */; };
-		7765D73329086A8900430F30 /* TimerTimesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7765D73229086A8900430F30 /* TimerTimesListViewController.swift */; };
+		7765D73329086A8900430F30 /* MainScreenTimersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7765D73229086A8900430F30 /* MainScreenTimersListViewController.swift */; };
 		7765D735290AE0E100430F30 /* SetTimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7765D734290AE0E100430F30 /* SetTimerViewController.swift */; };
 		7765D737290B1CB700430F30 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7765D736290B1CB700430F30 /* SettingsTableViewController.swift */; };
 		7765D73B290C6D7B00430F30 /* ModelTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7765D73A290C6D7B00430F30 /* ModelTimer.swift */; };
@@ -24,7 +24,7 @@
 /* Begin PBXFileReference section */
 		774B01D629019DCF00456853 /* UIFont+CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+CustomFont.swift"; sourceTree = "<group>"; };
 		775D49A92906F54F00FE4A59 /* SetTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTheme.swift; sourceTree = "<group>"; };
-		7765D73229086A8900430F30 /* TimerTimesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerTimesListViewController.swift; sourceTree = "<group>"; };
+		7765D73229086A8900430F30 /* MainScreenTimersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenTimersListViewController.swift; sourceTree = "<group>"; };
 		7765D734290AE0E100430F30 /* SetTimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTimerViewController.swift; sourceTree = "<group>"; };
 		7765D736290B1CB700430F30 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		7765D73A290C6D7B00430F30 /* ModelTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTimer.swift; sourceTree = "<group>"; };
@@ -78,10 +78,10 @@
 			isa = PBXGroup;
 			children = (
 				77CBB46429014BF000A4D3B0 /* ViewController.swift */,
-				7765D73229086A8900430F30 /* TimerTimesListViewController.swift */,
+				7765D73229086A8900430F30 /* MainScreenTimersListViewController.swift */,
 				775D49A92906F54F00FE4A59 /* SetTheme.swift */,
 				77CBB46929014BF200A4D3B0 /* Assets.xcassets */,
-				7765D73A290C6D7B00430F30 /* ModelTimer.swift */,
+				77DF9C1C290E74B6003F1443 /* Model */,
 				77CBB47429014C9000A4D3B0 /* Supporting Files */,
 				77CBB46E29014BF200A4D3B0 /* Info.plist */,
 				774B01DC2902FDF200456853 /* Settings */,
@@ -99,6 +99,14 @@
 				77DF9C1A290E70EE003F1443 /* DisplayFormatedTimeExtension.swift */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		77DF9C1C290E74B6003F1443 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7765D73A290C6D7B00430F30 /* ModelTimer.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,7 +182,7 @@
 				774B01D729019DCF00456853 /* UIFont+CustomFont.swift in Sources */,
 				77DF9C1B290E70EE003F1443 /* DisplayFormatedTimeExtension.swift in Sources */,
 				7765D73B290C6D7B00430F30 /* ModelTimer.swift in Sources */,
-				7765D73329086A8900430F30 /* TimerTimesListViewController.swift in Sources */,
+				7765D73329086A8900430F30 /* MainScreenTimersListViewController.swift in Sources */,
 				7765D735290AE0E100430F30 /* SetTimerViewController.swift in Sources */,
 				77CBB46529014BF000A4D3B0 /* ViewController.swift in Sources */,
 				77CBB46129014BF000A4D3B0 /* AppDelegate.swift in Sources */,

@@ -9,6 +9,11 @@ import Foundation
 
 class ModelTimer {
     
+    static let shared = ModelTimer()
+
+    private init() { }
+
+    
     private var listOfTimersForSound: [TimerForSound] = [] {
         didSet {
             listOfTimersForSound.sort()

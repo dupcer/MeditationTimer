@@ -21,8 +21,8 @@ class ViewController: UIViewController {
     var timerIsPaused: Bool = true
     var timer: Timer? = nil
     
-    let timerTimesListVC = TimerTimesListViewController()
-    let settingsVC = SettingsTableViewController(modelTimer: ModelTimer())
+    let timersListVC = MainScreenTimersListViewController()
+    let settingsVC = SettingsTableViewController()
     let themeGetter = SetTheme(frame: UIScreen.main.bounds)
     
     private var defaultTheme: Theme {
@@ -119,21 +119,21 @@ class ViewController: UIViewController {
         
         addShadowToElements([timerLabel, resetButton])
         
-        timerTimesListVC.view.isUserInteractionEnabled = true
+        timersListVC.view.isUserInteractionEnabled = true
         let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showSettings))
-        timerTimesListVC.view.addGestureRecognizer(guestureRecognizer)
-        addChild(timerTimesListVC)
-        view.addSubview(timerTimesListVC.view)
+        timersListVC.view.addGestureRecognizer(guestureRecognizer)
+        addChild(timersListVC)
+        view.addSubview(timersListVC.view)
         
-        timerTimesListVC.view.translatesAutoresizingMaskIntoConstraints = false
+        timersListVC.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            timerTimesListVC.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            timerTimesListVC.view.bottomAnchor.constraint(equalTo: timerLabel.topAnchor),
-            timerTimesListVC.view.widthAnchor.constraint(equalToConstant: 150),
-            timerTimesListVC.view.heightAnchor.constraint(equalToConstant: 50),
+            timersListVC.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            timersListVC.view.bottomAnchor.constraint(equalTo: timerLabel.topAnchor),
+            timersListVC.view.widthAnchor.constraint(equalToConstant: 150),
+            timersListVC.view.heightAnchor.constraint(equalToConstant: 50),
         ])
         
-        
+        settingsVC.vcToUpdate = timersListVC
 
     }
     
@@ -276,7 +276,7 @@ class ViewController: UIViewController {
                 self.settingsButton.tintColor = theme.elements
             }
         )
-        timerTimesListVC.setNewTheme(theme)
+        timersListVC.setNewTheme(theme)
     }
     
     @objc private func didSwipe(_ sender: UISwipeGestureRecognizer) {
@@ -290,6 +290,11 @@ class ViewController: UIViewController {
                 applyNewTheme(newTheme, next: false)
             }
         }
+    }
+
+    
+    func updateOtherViewsUponSettingsChange() {
+        
     }
     
 

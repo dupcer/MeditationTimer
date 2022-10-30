@@ -7,10 +7,8 @@
 
 import UIKit
 
-class TimerTimesListViewController: UIViewController, DisplayFormatedTimeExtension {
+class MainScreenTimersListViewController: UIViewController, DisplayFormatedTimeExtension {
 
-    private var listOfTimerTimes: [String] = []
-    
     var timerSign: UIImage!
     var timerSignImageView: UIImageView!
     
@@ -42,36 +40,33 @@ class TimerTimesListViewController: UIViewController, DisplayFormatedTimeExtensi
         label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
+        label.numberOfLines = 4
         label.textColor = theme?.elements
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        setListOfTimerTimes(listOfTimerTimes)
+        setListOfTimerTimes()
         view.addSubview(label)
         
         
         NSLayoutConstraint.activate([
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            label.topAnchor.constraint(equalTo: timerSignImageView.bottomAnchor),
+            label.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor)
         ])
-        
     }
     
-    func setListOfTimerTimes(_ list: [String?]) {
+    func setListOfTimerTimes() {
         var timerTextToSet: String = ""
-                
-        for time in list {
-            if let time = time {
-                if timerTextToSet != "" {
-                    timerTextToSet.append("\n")
-                }
-                timerTextToSet.append(time)
-            }
-        }
         
-        if timerTextToSet == "" {
+        guard let list = ModelTimer.shared.getListOfTimersForSound() else {
             timerTextToSet = "--:-- min"
+            return self.label.text = timerTextToSet
         }
         
-        self.label.text = timerTextToSet
+        for time in list {
+            timerTextToSet.append(getShortedFormattedTimer(time))
+            timerTextToSet.append("\n")
+        }
+        return self.label.text = timerTextToSet
     }
 
     func setNewTheme(_ newTheme: Theme) {
@@ -84,4 +79,5 @@ class TimerTimesListViewController: UIViewController, DisplayFormatedTimeExtensi
         label.textColor = theme?.elements
     }
 
+    
 }
