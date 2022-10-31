@@ -19,6 +19,10 @@
 		77CBB46A29014BF200A4D3B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77CBB46929014BF200A4D3B0 /* Assets.xcassets */; };
 		77CBB46D29014BF200A4D3B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77CBB46B29014BF200A4D3B0 /* LaunchScreen.storyboard */; };
 		77DF9C1B290E70EE003F1443 /* DisplayFormatedTimeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF9C1A290E70EE003F1443 /* DisplayFormatedTimeExtension.swift */; };
+		77DF9C1E290F1EF6003F1443 /* ModelSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF9C1D290F1EF6003F1443 /* ModelSound.swift */; };
+		77DF9C22290F22D6003F1443 /* a.wav in Resources */ = {isa = PBXBuildFile; fileRef = 77DF9C20290F22D6003F1443 /* a.wav */; };
+		77DF9C25291069FE003F1443 /* SetSoundTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF9C24291069FE003F1443 /* SetSoundTableViewController.swift */; };
+		77DF9C2729106A61003F1443 /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF9C2629106A61003F1443 /* SoundPlayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +40,10 @@
 		77CBB46C29014BF200A4D3B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		77CBB46E29014BF200A4D3B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77DF9C1A290E70EE003F1443 /* DisplayFormatedTimeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayFormatedTimeExtension.swift; sourceTree = "<group>"; };
+		77DF9C1D290F1EF6003F1443 /* ModelSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSound.swift; sourceTree = "<group>"; };
+		77DF9C20290F22D6003F1443 /* a.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = a.wav; sourceTree = "<group>"; };
+		77DF9C24291069FE003F1443 /* SetSoundTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSoundTableViewController.swift; sourceTree = "<group>"; };
+		77DF9C2629106A61003F1443 /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +62,7 @@
 			children = (
 				7765D734290AE0E100430F30 /* SetTimerViewController.swift */,
 				7765D736290B1CB700430F30 /* SettingsTableViewController.swift */,
+				77DF9C24291069FE003F1443 /* SetSoundTableViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -85,6 +94,7 @@
 				77CBB47429014C9000A4D3B0 /* Supporting Files */,
 				77CBB46E29014BF200A4D3B0 /* Info.plist */,
 				774B01DC2902FDF200456853 /* Settings */,
+				77DF9C1F290F22BF003F1443 /* Sounds */,
 			);
 			path = MeditationTimer;
 			sourceTree = "<group>";
@@ -97,6 +107,7 @@
 				77CBB46B29014BF200A4D3B0 /* LaunchScreen.storyboard */,
 				774B01D629019DCF00456853 /* UIFont+CustomFont.swift */,
 				77DF9C1A290E70EE003F1443 /* DisplayFormatedTimeExtension.swift */,
+				77DF9C2629106A61003F1443 /* SoundPlayer.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -105,8 +116,17 @@
 			isa = PBXGroup;
 			children = (
 				7765D73A290C6D7B00430F30 /* ModelTimer.swift */,
+				77DF9C1D290F1EF6003F1443 /* ModelSound.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		77DF9C1F290F22BF003F1443 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				77DF9C20290F22D6003F1443 /* a.wav */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,6 +189,7 @@
 			files = (
 				77CBB46D29014BF200A4D3B0 /* LaunchScreen.storyboard in Resources */,
 				77CBB46A29014BF200A4D3B0 /* Assets.xcassets in Resources */,
+				77DF9C22290F22D6003F1443 /* a.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77DF9C2729106A61003F1443 /* SoundPlayer.swift in Sources */,
 				774B01D729019DCF00456853 /* UIFont+CustomFont.swift in Sources */,
 				77DF9C1B290E70EE003F1443 /* DisplayFormatedTimeExtension.swift in Sources */,
 				7765D73B290C6D7B00430F30 /* ModelTimer.swift in Sources */,
@@ -187,6 +209,8 @@
 				77CBB46529014BF000A4D3B0 /* ViewController.swift in Sources */,
 				77CBB46129014BF000A4D3B0 /* AppDelegate.swift in Sources */,
 				77CBB46329014BF000A4D3B0 /* SceneDelegate.swift in Sources */,
+				77DF9C25291069FE003F1443 /* SetSoundTableViewController.swift in Sources */,
+				77DF9C1E290F1EF6003F1443 /* ModelSound.swift in Sources */,
 				775D49AA2906F54F00FE4A59 /* SetTheme.swift in Sources */,
 				7765D737290B1CB700430F30 /* SettingsTableViewController.swift in Sources */,
 			);

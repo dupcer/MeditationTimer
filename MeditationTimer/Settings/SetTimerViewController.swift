@@ -132,6 +132,9 @@ class SetTimerViewController: UIViewController {
         modelTimer.addNewTimerToList(timerForSound, indexPathItem: indexOfCellToSetTimerFor)
     }
     
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
     
 }
