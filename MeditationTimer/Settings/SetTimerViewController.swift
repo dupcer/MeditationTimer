@@ -9,8 +9,9 @@ import UIKit
 
 class SetTimerViewController: UIViewController {
 
-    let modelTimer: ModelTimer
     let indexOfCellToSetTimerFor: Int
+    let modelTimer = ModelTimer.shared
+    
     private var modelTimerThatWasSetBefore: TimerForSound? {
         if let list = modelTimer.getListOfTimersForSound() {
             if list.indices.contains(indexOfCellToSetTimerFor) {
@@ -20,8 +21,7 @@ class SetTimerViewController: UIViewController {
         return nil
     }
     
-    init(modelTimer: ModelTimer, indexOfCellToSetTimerFor: Int) {
-        self.modelTimer = modelTimer
+    init(indexOfCellToSetTimerFor: Int) {
         self.indexOfCellToSetTimerFor = indexOfCellToSetTimerFor
         super.init(nibName: nil, bundle: nil)
     }
