@@ -40,8 +40,7 @@ class SetTimerViewController: UIViewController {
     
     private var timePicker: UIDatePicker!
     
-    private var soundButtonImage: UIImage!
-    private var soundButton: UIButton!
+    private var stackView: UIStackView!
     
     private let constant: CGFloat = 20
     
@@ -101,24 +100,51 @@ class SetTimerViewController: UIViewController {
             timePicker.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
         
+        
+        let speakerImageView = UIImageView()
+        speakerImageView.image = UIImage(systemName: "speaker.wave.2") ?? UIImage(named:"speakerSign")
+        speakerImageView.image?.withTintColor(.label)
+        speakerImageView.translatesAutoresizingMaskIntoConstraints = false
 
-        soundButtonImage = UIImage(systemName: "speaker.wave.2") ?? UIImage(named:"speakerSign")
-
-        soundButton = UIButton()
-        soundButton.setImage(soundButtonImage, for: .normal)
-        soundButton.imageView?.tintColor = .label
-
+        let soundButton = UIButton()
         soundButton.setTitle("Sound for this timer", for: .normal)
-        soundButton.addTarget(self, action: #selector(selectSoundButtonTapped), for: .touchUpInside)
+        soundButton.setTitleColor(.label, for: .normal)
         soundButton.translatesAutoresizingMaskIntoConstraints = false
-        isSwitchOn ? (soundButton.isHidden = false) : (soundButton.isHidden = true)
-        view.addSubview(soundButton)
+        
+        let arrowImageView = UIImageView()
+        arrowImageView.image = UIImage(systemName: "greaterthan") ?? UIImage(named:"arrowSign")
+        arrowImageView.image?.withTintColor(.systemGray6)
+        arrowImageView.translatesAutoresizingMaskIntoConstraints = false
+
+        
+        stackView = UIStackView()
+        stackView.axis  = NSLayoutConstraint.Axis.horizontal
+        stackView.distribution  = UIStackView.Distribution.equalSpacing
+        stackView.alignment = UIStackView.Alignment.center
+        stackView.spacing   = constant
+        stackView.tintColor = .label
+        stackView.clipsToBounds = true
+        stackView.layer.cornerRadius = 10
+
+        stackView.addArrangedSubview(speakerImageView)
+        stackView.addArrangedSubview(soundButton)
+        stackView.addArrangedSubview(arrowImageView)
+        stackView.backgroundColor = .tertiarySystemBackground
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: constant, bottom: 0, trailing: constant)
+
+
+
+        isSwitchOn ? (stackView.isHidden = false) : (stackView.isHidden = true)
+        self.view.addSubview(stackView)
+
         
         NSLayoutConstraint.activate([
-            soundButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            soundButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: constant),
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -constant),
+            stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
         ])
-
     }
     
     @objc private func switchValueDidChange(_ sender: UISwitch) {
@@ -129,7 +155,7 @@ class SetTimerViewController: UIViewController {
         self.isSwitchOn = newValue
         switchButton.isOn = newValue
         timePicker.isHidden = !newValue
-        soundButton.isHidden = !newValue
+        stackView.isHidden = !newValue
     }
 
     override func viewWillDisappear(_ animated: Bool) {

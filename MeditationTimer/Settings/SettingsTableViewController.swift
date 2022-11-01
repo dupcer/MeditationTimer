@@ -79,7 +79,7 @@ class SettingsTableViewController: UITableViewController, UINavigationController
             content.secondaryText = "Default"
             content.image = UIImage(systemName: "speaker.wave.2")?.withTintColor(.label, renderingMode: .alwaysOriginal)
         }
-        content.image?.withTintColor(UIColor.cyan)
+//        content.image?.withTintColor(UIColor.cyan)
         cell.layer.cornerRadius = 10
         cell.contentView.frame(forAlignmentRect: CGRect(origin: CGPoint(x: 10, y: 15), size: CGSize(width: 200, height: 50)))
         cell.window?.clipsToBounds = true
