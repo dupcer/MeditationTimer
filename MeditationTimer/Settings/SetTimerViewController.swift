@@ -40,6 +40,9 @@ class SetTimerViewController: UIViewController {
     
     private var timePicker: UIDatePicker!
     
+    private var soundButtonImage: UIImage!
+    private var soundButton: UIButton!
+    
     private let constant: CGFloat = 20
     
     override func viewDidLoad() {
@@ -88,18 +91,34 @@ class SetTimerViewController: UIViewController {
         timePicker.translatesAutoresizingMaskIntoConstraints = false
         isSwitchOn ? (timePicker.isHidden = false) : (timePicker.isHidden = true)
         timePicker.datePickerMode = .countDownTimer
-        if isSwitchOn {
-            if let model = modelTimerThatWasSetBefore {
-                timePicker.countDownDuration = model.totalAmountOfSeconds
-            }
+        if isSwitchOn, let model = modelTimerThatWasSetBefore {
+            timePicker.countDownDuration = model.totalAmountOfSeconds
         }
-        
         view.addSubview(timePicker)
         
         NSLayoutConstraint.activate([
             timePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             timePicker.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
+        
+
+        soundButtonImage = UIImage(systemName: "speaker.wave.2") ?? UIImage(named:"speakerSign")
+
+        soundButton = UIButton()
+        soundButton.setImage(soundButtonImage, for: .normal)
+        soundButton.imageView?.tintColor = .label
+
+        soundButton.setTitle("Sound for this timer", for: .normal)
+        soundButton.addTarget(self, action: #selector(selectSoundButtonTapped), for: .touchUpInside)
+        soundButton.translatesAutoresizingMaskIntoConstraints = false
+        isSwitchOn ? (soundButton.isHidden = false) : (soundButton.isHidden = true)
+        view.addSubview(soundButton)
+        
+        NSLayoutConstraint.activate([
+            soundButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            soundButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: constant),
+        ])
+
     }
     
     @objc private func switchValueDidChange(_ sender: UISwitch) {
@@ -110,6 +129,7 @@ class SetTimerViewController: UIViewController {
         self.isSwitchOn = newValue
         switchButton.isOn = newValue
         timePicker.isHidden = !newValue
+        soundButton.isHidden = !newValue
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -135,6 +155,12 @@ class SetTimerViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+    }
+    
+    @objc private func selectSoundButtonTapped() {
+        let setSoundVC = SetSoundTableViewController()
+        _ = UINavigationController(rootViewController: setSoundVC)
+        navigationController?.pushViewController(setSoundVC, animated: true)
     }
     
 }
