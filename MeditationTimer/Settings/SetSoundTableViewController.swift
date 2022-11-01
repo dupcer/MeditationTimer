@@ -9,9 +9,9 @@ import UIKit
 
 class SetSoundTableViewController: UITableViewController {
 
-    private let myAudios = ModelSound.shared.dictOfSounds.filter({ $0.key.hasPrefix("Audio_my") })
-    private let otherAudios = ModelSound.shared.dictOfSounds.filter({ !$0.key.hasPrefix("Audio_my") })
-    
+    private let myAudios = ModelSound.shared.AllSounds[1]
+    private let otherAudios = ModelSound.shared.AllSounds[2]
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "setSoundCell")
@@ -50,11 +50,11 @@ class SetSoundTableViewController: UITableViewController {
         var content = cell.defaultContentConfiguration()
         
         if indexPath.section == 0 {
-            content.text = ModelSound.shared.dictOfSounds["None"]
+            content.text = ModelSound.shared.AllSounds[0][0]
         } else if indexPath.section == 1 {
-            content.text = Array(myAudios.keys)[indexPath.item]
+            content.text = ModelSound.shared.getDescriptiveName(myAudios[indexPath.item])
         } else {
-            content.text = Array(otherAudios.keys)[indexPath.item]
+            content.text = ModelSound.shared.getDescriptiveName(otherAudios[indexPath.item])
         }
         
         cell.layer.cornerRadius = 10
@@ -67,7 +67,10 @@ class SetSoundTableViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let soundName = Array(ModelSound.shared.dictOfSounds.keys)[indexPath.item]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "setSoundCell", for: indexPath)
+        cell.accessoryType = .checkmark
+        
+        let soundName = ModelSound.shared.AllSounds[indexPath.section][indexPath.item]
         ModelSound.shared.selectSound(name: soundName)
         self.tableView.reloadData()
     }
