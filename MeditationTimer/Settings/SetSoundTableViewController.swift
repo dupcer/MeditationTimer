@@ -21,11 +21,13 @@ class SetSoundTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 2
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
+            return 1
+        } else if section == 1 {
             return myAudios.count
         } else {
             return otherAudios.count
@@ -34,6 +36,8 @@ class SetSoundTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
+            return "No sound"
+        } else if section == 1 {
             return "Meditational sounds"
         } else {
             return "Others"
@@ -46,6 +50,8 @@ class SetSoundTableViewController: UITableViewController {
         var content = cell.defaultContentConfiguration()
         
         if indexPath.section == 0 {
+            content.text = ModelSound.shared.dictOfSounds["None"]
+        } else if indexPath.section == 1 {
             content.text = Array(myAudios.keys)[indexPath.item]
         } else {
             content.text = Array(otherAudios.keys)[indexPath.item]
@@ -63,5 +69,6 @@ class SetSoundTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let soundName = Array(ModelSound.shared.dictOfSounds.keys)[indexPath.item]
         ModelSound.shared.selectSound(name: soundName)
+        self.tableView.reloadData()
     }
 }

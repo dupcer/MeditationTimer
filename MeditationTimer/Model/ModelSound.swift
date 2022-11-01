@@ -17,7 +17,10 @@ class ModelSound {
     
     private let soundPlayer = SoundPlayer()
     
-    var dictOfSounds: [String:String] {
+    var dictOfSounds: [
+        String : // file name
+        String   // display, discriptive name
+    ] {
         get {
             populateDictOfSounds()
         }
@@ -25,16 +28,18 @@ class ModelSound {
     
     private(set) var selected: String = "Audio_my1"
     
+    private let noneName = "None"
+    
     private func populateDictOfSounds() -> [String:String] {
-        var dict: [String:String] = [:]
+        var dict: [String:String] = [noneName: noneName]
         for number in Range(1...6) {
             let name = "Audio_my\(number)"
-            dict["name"] = name
+            dict["name"] = "discriptive name \(name)"
         }
 
         for number in Range(0...23) {
             let name = "Audio_\(number)"
-            dict["name"] = name
+            dict["name"] = "discriptive name \(name)"
         }
         return dict
     }
@@ -45,6 +50,9 @@ class ModelSound {
     }
     
     private func playSound(_ name: String) {
+        if name == noneName {
+            return
+        }
         soundPlayer.playMySound(name: name)
     }
     
