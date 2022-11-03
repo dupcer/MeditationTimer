@@ -8,9 +8,27 @@
 import UIKit
 
 class SetTimerViewController: UIViewController {
-
+    
+    init(indexOfCellToSetTimerFor: Int) {
+        self.indexOfCellToSetTimerFor = indexOfCellToSetTimerFor
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     let indexOfCellToSetTimerFor: Int
     let modelTimer = ModelTimer.shared
+    var currentSoundFileName: String? {
+        guard let list = modelTimer.getListOfTimersForSound() else {
+            return nil
+        }
+        
+        if list.indices.contains(indexOfCellToSetTimerFor) {
+            return list[indexOfCellToSetTimerFor].soundFileName
+        } else {
+            return nil
+        }
+        
+        
+    }
     
     private var modelTimerThatWasSetBefore: TimerForSound? {
         if let list = modelTimer.getListOfTimersForSound() {
@@ -20,12 +38,7 @@ class SetTimerViewController: UIViewController {
         }
         return nil
     }
-    
-    init(indexOfCellToSetTimerFor: Int) {
-        self.indexOfCellToSetTimerFor = indexOfCellToSetTimerFor
-        super.init(nibName: nil, bundle: nil)
-    }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -38,12 +51,34 @@ class SetTimerViewController: UIViewController {
     private var secondaryTextLabel: UILabel!
     private let secondaryText = "Turn the timer on, to hear sound on the set time"
     
+    private var soundSubtitle: String {
+        let defaultValue = "Default"
+        if let currentSoundFileName = currentSoundFileName {
+            return ModelSound.shared.getDescriptiveName(currentSoundFileName)
+            ?? defaultValue
+        }
+        return defaultValue
+    }
+    
     private var timePicker: UIDatePicker!
     
-//    private var stackView: UIStackView!
     private var soundButton: UIButton!
     
     private let constant: CGFloat = 20
+    
+    private func getSoundButtonConfig() -> UIButton.Configuration {
+        var soundButtonConfig = UIButton.Configuration.gray()
+        soundButtonConfig.title = "Sound for this timer"
+        soundButtonConfig.subtitle = soundSubtitle
+        soundButtonConfig.image = UIImage(systemName: "speaker.wave.3.fill") ?? UIImage(named:"arrowSign")
+        
+        soundButtonConfig.buttonSize = .large
+        soundButtonConfig.baseForegroundColor = .label
+        soundButtonConfig.cornerStyle = .large
+        soundButtonConfig.imagePlacement = .trailing
+        soundButtonConfig.imagePadding = view.frame.width / 3
+        return soundButtonConfig
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,76 +136,11 @@ class SetTimerViewController: UIViewController {
             timePicker.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
         
-/*
-//        let speakerImageView = UIImageView()
-//        speakerImageView.image = UIImage(systemName: "speaker.wave.2") ?? UIImage(named:"speakerSign")
-//        speakerImageView.image?.withTintColor(.label)
-//        speakerImageView.translatesAutoresizingMaskIntoConstraints = false
-
-        var soundButton = UIButton()
-        soundButton.setTitle("Sound for this timer", for: .normal)
-        soundButton.setTitleColor(.label, for: .normal)
-        soundButton.setImage(UIImage(systemName: "speaker.wave.2") ?? UIImage(named:"speakerSign"), for: .normal)
-
-        
-        var buttonConfiguration = UIButton.Configuration.borderless()
-        buttonConfiguration.imagePadding = constant
-        soundButton = UIButton(configuration: buttonConfiguration)
 
         
         
         
-        soundButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        let arrowImageView = UIImageView()
-        arrowImageView.image = UIImage(systemName: "greaterthan") ?? UIImage(named:"arrowSign")
-        arrowImageView.image?.withTintColor(.systemGray6)
-        arrowImageView.translatesAutoresizingMaskIntoConstraints = false
-
-        
-        stackView = UIStackView()
-        stackView.axis  = NSLayoutConstraint.Axis.horizontal
-        stackView.distribution  = UIStackView.Distribution.equalSpacing
-        stackView.alignment = UIStackView.Alignment.center
-        stackView.spacing   = constant
-        stackView.tintColor = .label
-        stackView.clipsToBounds = true
-        stackView.layer.cornerRadius = 10
-
-//        stackView.addArrangedSubview(speakerImageView)
-        stackView.addArrangedSubview(soundButton)
-        stackView.addArrangedSubview(arrowImageView)
-        stackView.backgroundColor = .tertiarySystemBackground
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: constant, leading: constant, bottom: constant, trailing: constant)
-
-
-
-        isSwitchOn ? (stackView.isHidden = false) : (stackView.isHidden = true)
-        self.view.addSubview(stackView)
-
-        
-        NSLayoutConstraint.activate([
-            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -constant),
-            stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-        ])
- */
-
-        
-        var configuration = UIButton.Configuration.gray()
-        configuration.title = "Sound for this timer"
-        configuration.image = UIImage(systemName: "speaker.wave.3.fill") ?? UIImage(named:"arrowSign")
-        
-        configuration.buttonSize = .large
-        configuration.baseForegroundColor = .label
-        configuration.cornerStyle = .large
-        configuration.imagePlacement = .trailing
-        configuration.imagePadding = view.frame.width / 3
-        
-        
-        soundButton = UIButton(configuration: configuration, primaryAction: nil)
+        soundButton = UIButton(configuration: getSoundButtonConfig(), primaryAction: nil)
         soundButton.addTarget(self, action: #selector(selectSoundButtonTapped), for: .touchUpInside)
         isSwitchOn ? (soundButton.isHidden = false) : (soundButton.isHidden = true)
         
@@ -181,11 +151,15 @@ class SetTimerViewController: UIViewController {
         NSLayoutConstraint.activate([
             soundButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             soundButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -constant),
-//            soundButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
         ])
-
-        
     }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        soundButton.configuration = getSoundButtonConfig()
+    }
+    
     
     @objc private func switchValueDidChange(_ sender: UISwitch) {
         setSwitchToBeOn(sender.isOn)
@@ -213,18 +187,13 @@ class SetTimerViewController: UIViewController {
         if let compMin = components.minute, compMin > 0 {
             min = UInt(compMin)
         }
-        let timerForSound = TimerForSound(hour: UInt(components.hour ?? 0), minute: min)
+        let timerForSound = TimerForSound(hour: UInt(components.hour ?? 0), minute: min, soundFileName: currentSoundFileName)
         
         modelTimer.addNewTimerToList(timerForSound, indexPathItem: indexOfCellToSetTimerFor)
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
-    
+
     @objc private func selectSoundButtonTapped() {
-        let setSoundVC = SetSoundTableViewController()
+        let setSoundVC = SetSoundTableViewController(indexOfCellToSetTimerFor: indexOfCellToSetTimerFor)
         _ = UINavigationController(rootViewController: setSoundVC)
         navigationController?.pushViewController(setSoundVC, animated: true)
     }

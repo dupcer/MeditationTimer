@@ -40,23 +40,39 @@ class ModelTimer {
             listOfTimersForSound.remove(at: index)
         }
     }
+    
+    func addSound(indexInList: Int, fileName: String) {
+        if self.listOfTimersForSound.isEmpty {
+            return
+        }
+        
+        self.listOfTimersForSound[indexInList].setSound(fileName: fileName)
+    }
 }
 
 
 struct TimerForSound: Comparable {
-    static func < (lhs: TimerForSound, rhs: TimerForSound) -> Bool {
-        lhs.totalAmountOfSeconds < rhs.totalAmountOfSeconds
+    init(hour: UInt, minute: UInt, soundFileName: String?) {
+        self.hour = hour
+        self.minute = minute
+        self.soundFileName = soundFileName
     }
     
     var hour: UInt
     var minute: UInt
-    
-    init(hour: UInt, minute: UInt) {
-        self.hour = hour
-        self.minute = minute
-    }
+    var soundFileName: String?
+
     
     var totalAmountOfSeconds: Double {
         return Double( ((hour * 60) + minute) * 60 )
     }
+    
+    fileprivate mutating func setSound(fileName: String) {
+        self.soundFileName = fileName
+    }
+    
+    static func < (lhs: TimerForSound, rhs: TimerForSound) -> Bool {
+        lhs.totalAmountOfSeconds < rhs.totalAmountOfSeconds
+    }
+    
 }

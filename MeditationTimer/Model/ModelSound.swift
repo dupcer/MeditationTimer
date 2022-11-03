@@ -15,16 +15,7 @@ class ModelSound {
     
     
     private let soundPlayer = SoundPlayer()
-    
-//    var dictOfSounds: [
-//        String : // file name
-//        String   // display, discriptive name
-//    ] {
-//        get {
-//            dictionaryOfSounds
-//        }
-//    }
-    
+
     let AllSounds: [[String]] = [
         arrayOfSoundNone, arrayOfSoundsMy, arrayOfSoundsOthers
     ]
