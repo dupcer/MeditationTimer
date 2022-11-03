@@ -9,36 +9,23 @@ import UIKit
 
 class SetTimerViewController: UIViewController {
     
-    init(indexOfCellToSetTimerFor: Int) {
-        self.indexOfCellToSetTimerFor = indexOfCellToSetTimerFor
+    init(id: String, isTimerFreshNew: Bool) {
+        self.modelID = id
+        self.isTimerFreshNew = isTimerFreshNew
         super.init(nibName: nil, bundle: nil)
     }
     
-    let indexOfCellToSetTimerFor: Int
+    let modelID: String
+    let isTimerFreshNew: Bool
+    
     let modelTimer = ModelTimer.shared
     var currentSoundFileName: String? {
-        guard let list = modelTimer.getListOfTimersForSound() else {
+        guard let timer = modelTimer.getTimerForSound(with: modelID) else {
             return nil
         }
-        
-        if list.indices.contains(indexOfCellToSetTimerFor) {
-            return list[indexOfCellToSetTimerFor].soundFileName
-        } else {
-            return nil
-        }
-        
-        
+        return timer.soundFileName
     }
     
-    private var modelTimerThatWasSetBefore: TimerForSound? {
-        if let list = modelTimer.getListOfTimersForSound() {
-            if list.indices.contains(indexOfCellToSetTimerFor) {
-                return list[indexOfCellToSetTimerFor]
-            }
-        }
-        return nil
-    }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -52,12 +39,7 @@ class SetTimerViewController: UIViewController {
     private let secondaryText = "Turn the timer on, to hear sound on the set time"
     
     private var soundSubtitle: String {
-        let defaultValue = "Default"
-        if let currentSoundFileName = currentSoundFileName {
-            return ModelSound.shared.getDescriptiveName(currentSoundFileName)
-            ?? defaultValue
-        }
-        return defaultValue
+        return ModelSound.shared.getDescriptiveName(currentSoundFileName)
     }
     
     private var timePicker: UIDatePicker!
@@ -65,21 +47,7 @@ class SetTimerViewController: UIViewController {
     private var soundButton: UIButton!
     
     private let constant: CGFloat = 20
-    
-    private func getSoundButtonConfig() -> UIButton.Configuration {
-        var soundButtonConfig = UIButton.Configuration.gray()
-        soundButtonConfig.title = "Sound for this timer"
-        soundButtonConfig.subtitle = soundSubtitle
-        soundButtonConfig.image = UIImage(systemName: "speaker.wave.3.fill") ?? UIImage(named:"arrowSign")
-        
-        soundButtonConfig.buttonSize = .large
-        soundButtonConfig.baseForegroundColor = .label
-        soundButtonConfig.cornerStyle = .large
-        soundButtonConfig.imagePlacement = .trailing
-        soundButtonConfig.imagePadding = view.frame.width / 3
-        return soundButtonConfig
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -87,7 +55,7 @@ class SetTimerViewController: UIViewController {
         switchButton = UISwitch()
         switchButton.translatesAutoresizingMaskIntoConstraints = false
         switchButton.isUserInteractionEnabled = true
-        if modelTimerThatWasSetBefore != nil {
+        if !isTimerFreshNew {
             isSwitchOn = true
         }
         switchButton.isOn = isSwitchOn
@@ -126,7 +94,7 @@ class SetTimerViewController: UIViewController {
         timePicker.translatesAutoresizingMaskIntoConstraints = false
         isSwitchOn ? (timePicker.isHidden = false) : (timePicker.isHidden = true)
         timePicker.datePickerMode = .countDownTimer
-        if isSwitchOn, let model = modelTimerThatWasSetBefore {
+        if isSwitchOn, let model = modelTimer.getTimerForSound(with: modelID) {
             timePicker.countDownDuration = model.totalAmountOfSeconds
         }
         view.addSubview(timePicker)
@@ -137,8 +105,6 @@ class SetTimerViewController: UIViewController {
         ])
         
 
-        
-        
         
         soundButton = UIButton(configuration: getSoundButtonConfig(), primaryAction: nil)
         soundButton.addTarget(self, action: #selector(selectSoundButtonTapped), for: .touchUpInside)
@@ -175,10 +141,8 @@ class SetTimerViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
-        if !isSwitchOn, modelTimerThatWasSetBefore == nil {
-            return
-        } else if !isSwitchOn {
-            return modelTimer.removeTimerFromList(indexOfCellToSetTimerFor)
+        if !isSwitchOn {
+            return modelTimer.removeTimerFromList(with: modelID)
         }
         
         let date = timePicker.date
@@ -187,15 +151,31 @@ class SetTimerViewController: UIViewController {
         if let compMin = components.minute, compMin > 0 {
             min = UInt(compMin)
         }
-        let timerForSound = TimerForSound(hour: UInt(components.hour ?? 0), minute: min, soundFileName: currentSoundFileName)
         
-        modelTimer.addNewTimerToList(timerForSound, indexPathItem: indexOfCellToSetTimerFor)
+        modelTimer.setTimeForTimer(
+            withId: modelID,
+            hour: UInt(components.hour ?? 0),
+            minute: min)
     }
 
     @objc private func selectSoundButtonTapped() {
-        let setSoundVC = SetSoundTableViewController(indexOfCellToSetTimerFor: indexOfCellToSetTimerFor)
+        let setSoundVC = SetSoundTableViewController(id: modelID)
         _ = UINavigationController(rootViewController: setSoundVC)
         navigationController?.pushViewController(setSoundVC, animated: true)
+    }
+     
+    private func getSoundButtonConfig() -> UIButton.Configuration {
+        var soundButtonConfig = UIButton.Configuration.gray()
+        soundButtonConfig.title = "Sound for this timer"
+        soundButtonConfig.subtitle = soundSubtitle
+        soundButtonConfig.image = UIImage(systemName: "speaker.wave.3.fill") ?? UIImage(named:"arrowSign")
+        
+        soundButtonConfig.buttonSize = .large
+        soundButtonConfig.baseForegroundColor = .label
+        soundButtonConfig.cornerStyle = .large
+        soundButtonConfig.imagePlacement = .trailing
+        soundButtonConfig.imagePadding = view.frame.width / 3
+        return soundButtonConfig
     }
     
 }

@@ -20,13 +20,29 @@ class ModelSound {
         arrayOfSoundNone, arrayOfSoundsMy, arrayOfSoundsOthers
     ]
     
-    func getDescriptiveName(_ name: String) -> String? {
+    func getDescriptiveName(_ name: String?) -> String {
+        let defaultName = "Default"
+        
+        guard let name = name else {
+            return dictionaryOfSoundsMy["Audio_my1"] ?? defaultName
+        }
+        
         if name.contains("None") {
-            return dictionaryOfSoundsNone[name]
+            return dictionaryOfSoundsNone[name] ?? defaultName
         } else if name.contains("my") {
-            return dictionaryOfSoundsMy[name]
+            return dictionaryOfSoundsMy[name] ?? defaultName
         } else {
-            return dictionaryOfSoundsOthers[name]
+            return dictionaryOfSoundsOthers[name] ?? defaultName
+        }
+    }
+    
+    func getSectionAndItemOfNameForTable(_ name: String) -> (section:Int, item:Int) {
+        if name.contains("None") {
+            return (section: 0, item: 0)
+        } else if name.contains("my") {
+            return (section: 1, item: arrayOfSoundsMy.firstIndex(of: name) ?? 0)
+        } else {
+            return (section: 2, item: arrayOfSoundsOthers.firstIndex(of: name) ?? 0)
         }
     }
     
@@ -59,7 +75,7 @@ fileprivate let arrayOfSoundsMy: [String] = [
 ]
 fileprivate let dictionaryOfSoundsMy: [String:String] =
 [
-    "Audio_my1": "discriptive name Audio_my1",
+    "Audio_my1": "Default",
     "Audio_my2": "discriptive name Audio_my2",
     "Audio_my3": "discriptive name Audio_my3",
     "Audio_my4": "discriptive name Audio_my4",

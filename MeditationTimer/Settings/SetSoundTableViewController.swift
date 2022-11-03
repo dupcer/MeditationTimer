@@ -9,8 +9,8 @@ import UIKit
 
 class SetSoundTableViewController: UITableViewController {
     
-    init(indexOfCellToSetTimerFor: Int) {
-        self.indexInModelTimerToSetSoundFor = indexOfCellToSetTimerFor
+    init(id: String) {
+        self.modelID = id
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -18,7 +18,7 @@ class SetSoundTableViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var indexInModelTimerToSetSoundFor: Int
+    let modelID: String
 
     private let myAudios = ModelSound.shared.AllSounds[1]
     private let otherAudios = ModelSound.shared.AllSounds[2]
@@ -31,6 +31,7 @@ class SetSoundTableViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "setSoundCell")
         title = "Select sound"
         view.backgroundColor = .systemGray6
+        setSelectedSectionAndItemOfTable()
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -100,9 +101,21 @@ class SetSoundTableViewController: UITableViewController {
         let fileName = ModelSound.shared.AllSounds[self.selectedSection][self.selectedItem]
         
         ModelTimer.shared.addSound(
-            indexInList: indexInModelTimerToSetSoundFor,
+            withId: modelID,
             fileName: fileName
         )
-
+    }
+    
+    private func setSelectedSectionAndItemOfTable() {
+        if let timer = ModelTimer.shared.getTimerForSound(with: modelID) {
+            guard let fileName = timer.soundFileName else {
+                return
+            }
+            
+            let dataToSet = ModelSound.shared.getSectionAndItemOfNameForTable(fileName)
+            
+            self.selectedSection = dataToSet.section
+            self.selectedItem = dataToSet.item
+        }
     }
 }

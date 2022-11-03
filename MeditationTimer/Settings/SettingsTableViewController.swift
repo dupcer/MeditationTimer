@@ -74,12 +74,8 @@ class SettingsTableViewController: UITableViewController, UINavigationController
             populateTimerCellWithContent(&content, indexPath: indexPath)
             
             content.image = UIImage(systemName: "stopwatch")?.withTintColor(.label, renderingMode: .alwaysOriginal)
-        } else if indexPath.section == 1 {
-            content.text = "Sound"
-            content.secondaryText = "Default"
-            content.image = UIImage(systemName: "speaker.wave.2")?.withTintColor(.label, renderingMode: .alwaysOriginal)
         }
-//        content.image?.withTintColor(UIColor.cyan)
+        
         cell.layer.cornerRadius = 10
         cell.contentView.frame(forAlignmentRect: CGRect(origin: CGPoint(x: 10, y: 15), size: CGSize(width: 200, height: 50)))
         cell.window?.clipsToBounds = true
@@ -89,7 +85,16 @@ class SettingsTableViewController: UITableViewController, UINavigationController
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let setTimerVC = SetTimerViewController(indexOfCellToSetTimerFor: indexPath.item)
+        var setTimerVC: SetTimerViewController
+        
+        if let existingId = getExistingId(indexPathItem: indexPath.item) {
+            setTimerVC = SetTimerViewController(id: existingId, isTimerFreshNew: false)
+        } else {
+            let newTimer = TimerForSound(hour: 0, minute: 1, soundFileName: nil)
+            ModelTimer.shared.addNewTimerToList(newTimer)
+            setTimerVC = SetTimerViewController(id: newTimer.id, isTimerFreshNew: true)
+        }
+
         _ = UINavigationController(rootViewController: setTimerVC)
         navigationController?.pushViewController(setTimerVC, animated: true)
     }
@@ -100,14 +105,22 @@ class SettingsTableViewController: UITableViewController, UINavigationController
         return false
     }
 
-
+    private func getExistingId(indexPathItem: Int) -> String? {
+        if let list = ModelTimer.shared.getListOfTimersForSound() {
+            if list.indices.contains(indexPathItem)  {
+                return list[indexPathItem].id
+            }
+        }
+        return nil
+    }
     
     private func populateTimerCellWithContent(_ content: inout UIListContentConfiguration, indexPath: IndexPath) {
         content.text = "Timer"
 
         if let list = ModelTimer.shared.getListOfTimersForSound() {
             if list.count > indexPath.item {
-                content.secondaryText = "\(list[indexPath.item].hour):\(list[indexPath.item].minute) min"
+                let text = getShortedFormattedTimer(list[indexPath.item])
+                content.secondaryText = text
             }
         } else {
             content.secondaryText = "--:-- min"
