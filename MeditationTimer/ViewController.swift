@@ -25,6 +25,8 @@ class ViewController: UIViewController {
     let timersListVC = MainScreenTimersListViewController()
     let settingsVC = SettingsTableViewController()
     let themeGetter = SetTheme(frame: UIScreen.main.bounds)
+    let resultsVC = ResultsViewController()
+    var blurEffectView: UIVisualEffectView!
     
     private var defaultTheme: Theme {
         get {
@@ -102,23 +104,7 @@ class ViewController: UIViewController {
             resetButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
         ])
         
-        var doneButtonConfig = UIButton.Configuration.gray()
-        doneButtonConfig.cornerStyle = .medium
-        doneButtonConfig.buttonSize = .small
-        //        doneButtonConfig.baseForegroundColor = .green
-        doneButtonConfig.title = "Done"
-        doneButton = UIButton(configuration: doneButtonConfig)
-        doneButton.tintColor = .label
-        doneButton.translatesAutoresizingMaskIntoConstraints = false
-        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
-        view.addSubview(doneButton)
-        
-        NSLayoutConstraint.activate([
-            doneButton.leadingAnchor.constraint(equalTo: timerButton.trailingAnchor),
-            doneButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
-            doneButton.topAnchor.constraint(equalTo: timerButton.topAnchor, constant: 35),
-            doneButton.bottomAnchor.constraint(equalTo: timerButton.bottomAnchor, constant: -35),
-        ])
+
         
         var settingButtonConfiguration = UIButton.Configuration.plain()
         settingButtonConfiguration.buttonSize = .medium
@@ -154,6 +140,42 @@ class ViewController: UIViewController {
         
         settingsVC.vcToUpdate = timersListVC
         
+        
+        
+        let blurEffect = UIBlurEffect(style: .systemThinMaterial)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        view.addSubview(blurEffectView)
+        blurEffectView.isHidden = true
+        
+//        resultsVC.view.frame = CGRect(origin: CGPoint(x: 50, y: 50), size: CGSize(width: 100, height: 200))
+        
+        resultsVC.view.clipsToBounds = true
+        resultsVC.view.layer.cornerRadius = 25
+        addChild(resultsVC)
+        view.addSubview(resultsVC.view)
+        resultsVC.view.isHidden = true
+        
+        var doneButtonConfig = UIButton.Configuration.borderless()
+        doneButtonConfig.background.visualEffect = UIBlurEffect(style: .prominent)
+        doneButtonConfig.cornerStyle = .medium
+        doneButtonConfig.buttonSize = .small
+        var container = AttributeContainer()
+        container.font = UIFont.boldSystemFont(ofSize: 20)
+        doneButtonConfig.attributedTitle = AttributedString("Done", attributes: container)
+
+        doneButton = UIButton(configuration: doneButtonConfig)
+        doneButton.tintColor = .label
+        doneButton.translatesAutoresizingMaskIntoConstraints = false
+        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        view.addSubview(doneButton)
+        
+        NSLayoutConstraint.activate([
+            doneButton.leadingAnchor.constraint(equalTo: timerButton.trailingAnchor),
+            doneButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+            doneButton.topAnchor.constraint(equalTo: timerButton.topAnchor, constant: 35),
+            doneButton.bottomAnchor.constraint(equalTo: timerButton.bottomAnchor, constant: -35),
+        ])
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -265,6 +287,7 @@ class ViewController: UIViewController {
     }
     
     @objc private func doneButtonTapped() {
+        showResultsView()
         self.doneButton.isUserInteractionEnabled = false
         UIView.transition(
             with: self.doneButton,
@@ -282,6 +305,23 @@ class ViewController: UIViewController {
                 )
             }
         )
+    }
+    
+    private func showResultsView() {
+        blurEffectView.isHidden = false
+        resultsVC.view.isHidden = false
+        guard let resultView = resultsVC.view else {
+            return
+        }
+
+        resultsVC.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            resultView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            resultView.bottomAnchor.constraint(equalTo: doneButton.topAnchor, constant: -15),
+            resultView.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.9, constant: 30),
+            resultView.heightAnchor.constraint(equalTo: view.layoutMarginsGuide.heightAnchor, multiplier: 0.3, constant: -30),
+            
+        ])
     }
     
     private func applyNewTheme(_ theme: Theme, next animateToRight: Bool) {
