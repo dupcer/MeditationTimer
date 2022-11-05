@@ -12,7 +12,7 @@ class ModelTimer {
     static let shared = ModelTimer()
 
     private init() { }
-
+    private let soundPlayer = SoundPlayer()
     
     private var listOfTimersForSound: [TimerForSound] = [] {
         didSet {
@@ -70,6 +70,19 @@ class ModelTimer {
                 return
             }
             i += 1
+        }
+    }
+    
+    func updateCurrentTimeOfTimer(minutes: UInt, hours: UInt) {
+        for timer in listOfTimersForSound {
+            if timer.minute == minutes, timer.hour == hours {
+                if timer.soundFileName == "None" {
+                    return
+                }
+                
+                let fileName = timer.soundFileName ?? "Audio_my1"
+                soundPlayer.playMySound(fileName: fileName)
+            }
         }
     }
         

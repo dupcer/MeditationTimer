@@ -59,7 +59,7 @@ class ModelSound {
         if name == noneName {
             return
         }
-        soundPlayer.playMySound(name: name)
+        soundPlayer.playMySound(fileName: name)
     }
     
 }

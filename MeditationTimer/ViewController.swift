@@ -14,10 +14,11 @@ class ViewController: UIViewController {
     var timerLabel: UILabel!
     var timerButton: UIButton!
     var resetButton: UIButton!
+    var doneButton: UIButton!
     
     var hours: UInt = 0
     var minutes: UInt = 0
-    var seconds: UInt = 0
+    var seconds: UInt = 55
     var timerIsPaused: Bool = true
     var timer: Timer? = nil
     
@@ -36,22 +37,22 @@ class ViewController: UIViewController {
             self.timerButtonConfig = newValue
         }
     }
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = defaultTheme.background
         
         view.addSubview(themeGetter)
         let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
         rightSwipeGestureRecognizer.direction = .right
         themeGetter.addGestureRecognizer(rightSwipeGestureRecognizer)
-
+        
         let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
         leftSwipeGestureRecognizer.direction = .left
         themeGetter.addGestureRecognizer(leftSwipeGestureRecognizer)
-
+        
         let swipeUpGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(showSettings))
         swipeUpGestureRecognizer.direction = .up
         themeGetter.addGestureRecognizer(swipeUpGestureRecognizer)
@@ -71,7 +72,7 @@ class ViewController: UIViewController {
             timerLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
         
-
+        
         timerButton = UIButton()
         timerButton.translatesAutoresizingMaskIntoConstraints = false
         timerButton.addTarget(self, action: #selector(buttonTimerTapped), for: .touchUpInside)
@@ -79,7 +80,7 @@ class ViewController: UIViewController {
         view.addSubview(timerButton)
         
         NSLayoutConstraint.activate([
-//            timerButton.widthAnchor.constraint(equalToConstant: 150),
+            //            timerButton.widthAnchor.constraint(equalToConstant: 150),
             timerButton.heightAnchor.constraint(equalToConstant: 150),
             timerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             timerButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -30),
@@ -99,6 +100,24 @@ class ViewController: UIViewController {
             resetButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
             resetButton.topAnchor.constraint(equalTo: timerLabel.bottomAnchor),
             resetButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
+        ])
+        
+        var doneButtonConfig = UIButton.Configuration.gray()
+        doneButtonConfig.cornerStyle = .medium
+        doneButtonConfig.buttonSize = .small
+        //        doneButtonConfig.baseForegroundColor = .green
+        doneButtonConfig.title = "Done"
+        doneButton = UIButton(configuration: doneButtonConfig)
+        doneButton.tintColor = .label
+        doneButton.translatesAutoresizingMaskIntoConstraints = false
+        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        view.addSubview(doneButton)
+        
+        NSLayoutConstraint.activate([
+            doneButton.leadingAnchor.constraint(equalTo: timerButton.trailingAnchor),
+            doneButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+            doneButton.topAnchor.constraint(equalTo: timerButton.topAnchor, constant: 35),
+            doneButton.bottomAnchor.constraint(equalTo: timerButton.bottomAnchor, constant: -35),
         ])
         
         var settingButtonConfiguration = UIButton.Configuration.plain()
@@ -134,12 +153,12 @@ class ViewController: UIViewController {
         ])
         
         settingsVC.vcToUpdate = timersListVC
-
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-//        print("viewWillAppear")
+        //        print("viewWillAppear")
     }
     
     private func hideElements(_ isHidden: Bool) {
@@ -159,7 +178,7 @@ class ViewController: UIViewController {
             UIView.animate(withDuration: duration, delay: delay, animations: {
                 self.resetButton.isHidden = isHidden
                 self.settingsButton.isHidden = isHidden
-
+                
                 self.resetButton.alpha = 1
                 self.settingsButton.alpha = 1
             })
@@ -181,22 +200,7 @@ class ViewController: UIViewController {
     private func startTimer(){
         timerIsPaused = false
         updateTimerButton()
-        timer?.tolerance = 1.0
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ _ in
-            if self.seconds == 59 {
-                self.seconds = 0
-                if self.minutes == 59 {
-                    self.minutes = 0
-                    self.hours = self.hours + 1
-                } else {
-                    self.minutes = self.minutes + 1
-                }
-            } else {
-                self.seconds = self.seconds + 1
-            }
-            self.setTextForTimerLabel()
-        }
-        
+        timing()
     }
     
     private func stopTimer(){
@@ -228,7 +232,7 @@ class ViewController: UIViewController {
         self.timerButton.setImage(
             timerIsPaused ?
             UIImage(systemName: "play.circle", withConfiguration: timerButtonConfig) :
-            UIImage(systemName: "pause.circle", withConfiguration: timerButtonConfig),
+                UIImage(systemName: "pause.circle", withConfiguration: timerButtonConfig),
             for: .normal
         )
     }
@@ -260,12 +264,31 @@ class ViewController: UIViewController {
         self.present(navVC, animated: true, completion: nil)
     }
     
+    @objc private func doneButtonTapped() {
+        self.doneButton.isUserInteractionEnabled = false
+        UIView.transition(
+            with: self.doneButton,
+            duration: 0.3,
+            options: .transitionCrossDissolve,
+            animations: { [weak self] in
+                self?.doneButton.setTitle("", for: .normal)
+                
+                self?.doneButton.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
+                self?.doneButton.tintColor = .green
+            }, completion: { _ in
+                UIView.animate(withDuration: 1.2, delay: 1, animations: { [weak self] in
+                    self?.doneButton.tintColor = .label
+                }
+                )
+            }
+        )
+    }
     
     private func applyNewTheme(_ theme: Theme, next animateToRight: Bool) {
         UIView.transition(
             with: self.view,
             duration: 0.3,
-          options: animateToRight ? .transitionFlipFromRight : .transitionFlipFromLeft,
+            options: animateToRight ? .transitionFlipFromRight : .transitionFlipFromLeft,
             animations: {
                 self.view.backgroundColor = theme.background
                 self.timerLabel.textColor = theme.elements
@@ -291,12 +314,30 @@ class ViewController: UIViewController {
             }
         }
     }
-
     
-    func updateOtherViewsUponSettingsChange() {
-        
+    
+    private func timing() {
+        timer?.tolerance = 1.0
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ _ in
+            if self.seconds == 59 {
+                self.seconds = 0
+                if self.minutes == 59 {
+                    self.minutes = 0
+                    self.hours = self.hours + 1
+                } else {
+                    self.minutes = self.minutes + 1
+                    ModelTimer.shared.updateCurrentTimeOfTimer(
+                        minutes: self.minutes,
+                        hours: self.hours
+                    )
+                }
+            } else {
+                self.seconds = self.seconds + 1
+            }
+            self.setTextForTimerLabel()
+        }
     }
     
-
+    
 }
 
