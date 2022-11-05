@@ -8,7 +8,18 @@
 import UIKit
 
 class ResultsViewController: UIViewController {
-
+    
+    init(blurStyle: UIBlurEffect.Style) {
+        self.blurStyle = blurStyle
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    let blurStyle: UIBlurEffect.Style
+    
     let days: Int = 17
     
     var label: UILabel!
@@ -17,13 +28,13 @@ class ResultsViewController: UIViewController {
         super.viewDidLoad()
 
         
-        let blurEffect = UIBlurEffect(style: .prominent)
+        let blurEffect = UIBlurEffect(style: .regular)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.frame
         view.addSubview(blurEffectView)
         
         label = UILabel()
-        label.text = "You're meditating \(days) in a row"
+        label.text = "You're meditating \(days) days in a row"
         label.lineBreakMode = .byWordWrapping
         view.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false

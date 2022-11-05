@@ -7,6 +7,7 @@
 
 
 import UIKit
+let blurStyleForElements: UIBlurEffect.Style = .regular
 
 class ViewController: UIViewController {
     
@@ -22,10 +23,11 @@ class ViewController: UIViewController {
     var timerIsPaused: Bool = true
     var timer: Timer? = nil
     
+
     let timersListVC = MainScreenTimersListViewController()
     let settingsVC = SettingsTableViewController()
     let themeGetter = SetTheme(frame: UIScreen.main.bounds)
-    let resultsVC = ResultsViewController()
+    let resultsVC = ResultsViewController(blurStyle: blurStyleForElements)
     var blurEffectView: UIVisualEffectView!
     
     private var defaultTheme: Theme {
@@ -142,13 +144,14 @@ class ViewController: UIViewController {
         
         
         
-        let blurEffect = UIBlurEffect(style: .systemThinMaterial)
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialDark)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
         view.addSubview(blurEffectView)
         blurEffectView.isHidden = true
-        
-//        resultsVC.view.frame = CGRect(origin: CGPoint(x: 50, y: 50), size: CGSize(width: 100, height: 200))
+        let blurEffectGuestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(alertToAskToStartAgain))
+        blurEffectView.addGestureRecognizer(blurEffectGuestureRecognizer)
+
         
         resultsVC.view.clipsToBounds = true
         resultsVC.view.layer.cornerRadius = 25
@@ -157,15 +160,16 @@ class ViewController: UIViewController {
         resultsVC.view.isHidden = true
         
         var doneButtonConfig = UIButton.Configuration.borderless()
-        doneButtonConfig.background.visualEffect = UIBlurEffect(style: .prominent)
-        doneButtonConfig.cornerStyle = .medium
+        doneButtonConfig.background.visualEffect = UIBlurEffect(style: .regular)
         doneButtonConfig.buttonSize = .small
         var container = AttributeContainer()
-        container.font = UIFont.boldSystemFont(ofSize: 20)
+        container.font = UIFont.boldSystemFont(ofSize: 18)
         doneButtonConfig.attributedTitle = AttributedString("Done", attributes: container)
 
         doneButton = UIButton(configuration: doneButtonConfig)
+        doneButton.isHidden = true
         doneButton.tintColor = .label
+        doneButton.layer.cornerRadius = 25
         doneButton.translatesAutoresizingMaskIntoConstraints = false
         doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
         view.addSubview(doneButton)
@@ -178,22 +182,20 @@ class ViewController: UIViewController {
         ])
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        //        print("viewWillAppear")
-    }
     
     private func hideElements(_ isHidden: Bool) {
         let duration: TimeInterval = 0.75
         let delay: TimeInterval = 1
-        
+
         if isHidden {
             UIView.animate(withDuration: duration, delay: delay, animations: {
                 self.resetButton.alpha = 0
                 self.settingsButton.alpha = 0
+                self.doneButton.alpha = 0
             }, completion: {_ in
                 self.resetButton.isHidden = isHidden
                 self.settingsButton.isHidden = isHidden
+                self.doneButton.isHidden = isHidden
             } )
             
         } else {
@@ -203,6 +205,11 @@ class ViewController: UIViewController {
                 
                 self.resetButton.alpha = 1
                 self.settingsButton.alpha = 1
+                
+                if self.minutes > 0 || self.hours > 0 {
+                    self.doneButton.isHidden = isHidden
+                    self.doneButton.alpha = 1
+                }
             })
         }
     }
@@ -291,7 +298,7 @@ class ViewController: UIViewController {
         self.doneButton.isUserInteractionEnabled = false
         UIView.transition(
             with: self.doneButton,
-            duration: 0.3,
+            duration: 0.7,
             options: .transitionCrossDissolve,
             animations: { [weak self] in
                 self?.doneButton.setTitle("", for: .normal)
@@ -308,20 +315,36 @@ class ViewController: UIViewController {
     }
     
     private func showResultsView() {
-        blurEffectView.isHidden = false
-        resultsVC.view.isHidden = false
         guard let resultView = resultsVC.view else {
             return
         }
 
         resultsVC.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            resultView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             resultView.bottomAnchor.constraint(equalTo: doneButton.topAnchor, constant: -15),
-            resultView.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.9, constant: 30),
             resultView.heightAnchor.constraint(equalTo: view.layoutMarginsGuide.heightAnchor, multiplier: 0.3, constant: -30),
-            
+            resultView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+            resultView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
         ])
+        
+        self.blurEffectView.alpha = 0
+        self.resultsVC.view.alpha = 0
+        
+        self.blurEffectView.isHidden = false
+        self.resultsVC.view.isHidden = false
+
+        UIView.transition(
+            with: self.view,
+            duration: 1,
+            options: .curveEaseOut,
+            animations: { [weak self] in
+                self?.blurEffectView.alpha = 1
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.5, delay: 0.3, animations: { [weak self] in
+                    self?.resultsVC.view.alpha = 1
+                })
+           }
+        )
     }
     
     private func applyNewTheme(_ theme: Theme, next animateToRight: Bool) {
@@ -355,6 +378,22 @@ class ViewController: UIViewController {
         }
     }
     
+    @objc private func alertToAskToStartAgain() {
+        let ac = UIAlertController(title: "Your meditation time was saved.", message: "Do you want to start again?", preferredStyle: .actionSheet)
+
+        ac.addAction(UIAlertAction(title: "Start new meditation", style: .default, handler: prepareForNewMeditation))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+        present(ac, animated: true)
+    }
+    
+    @objc private func prepareForNewMeditation(action: UIAlertAction) {
+        resultsVC.view.isHidden = true
+        blurEffectView.isHidden = true
+        doneButton.isHidden = true
+        doneButton.isUserInteractionEnabled = true
+        resetTime()
+    }
     
     private func timing() {
         timer?.tolerance = 1.0
