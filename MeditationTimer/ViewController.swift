@@ -413,7 +413,7 @@ class ViewController: UIViewController {
         }
 
         let theme = isOn ? themeGetter.getDimDownTheme() : themeGetter.getCurrentTheme()
-        UIView.animate(withDuration: 2.0, animations: { [weak self, theme] in
+        UIView.transition(with: self.view, duration: 1.5, options: .transitionCrossDissolve, animations: { [weak self, theme] in
             self?.themeApplying(theme)
             self?.timersListVC.setNewTheme(theme)
         })
