@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol DisplayFormatedTimeExtension: UIViewController {
+protocol DisplayFormatedTimeExtension {
     func getFormattedTimer(_ timer: TimerForSound, stringPrefix: String) -> String
     func getShortedFormattedTimer(_ timer: TimerForSound) -> String
 }

@@ -16,6 +16,9 @@ class SettingsTableViewController: UITableViewController, UINavigationController
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "settingsTableCell")
         title = "Settings"
         view.backgroundColor = .systemGray6
+        
+        tableView.register(DimSwitchTableViewCell.self, forCellReuseIdentifier: "DimCell")
+
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -38,9 +41,9 @@ class SettingsTableViewController: UITableViewController, UINavigationController
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "Add timers"
+            return "Timers"
         } else if section == 1 {
-            return "Set the sound of the timer"
+            return "Display Setting"
         }
         return nil
     }
@@ -65,26 +68,32 @@ class SettingsTableViewController: UITableViewController, UINavigationController
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "settingsTableCell", for: indexPath)
-        cell.backgroundColor = .tertiarySystemBackground
         var content = cell.defaultContentConfiguration()
         
-        
         if indexPath.section == 0 {
-            
             populateTimerCellWithContent(&content, indexPath: indexPath)
             
+            let customCellStyle = CustomCellStyleParameters()
             content.image = UIImage(systemName: "stopwatch")?.withTintColor(.label, renderingMode: .alwaysOriginal)
+            cell.backgroundColor = customCellStyle.backgroundColor
+            cell.layer.cornerRadius = customCellStyle.cornerRadius
+            cell.accessoryType = .disclosureIndicator
+            cell.contentConfiguration = content
+            return cell
+
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DimCell", for: indexPath) as! DimSwitchTableViewCell
+            cell.backgroundColor = .tertiarySystemBackground
+            return cell
         }
         
-        cell.layer.cornerRadius = 10
-        cell.contentView.frame(forAlignmentRect: CGRect(origin: CGPoint(x: 10, y: 15), size: CGSize(width: 200, height: 50)))
-        cell.window?.clipsToBounds = true
-        cell.accessoryType = .disclosureIndicator
-        cell.contentConfiguration = content
-        return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section != 0 {
+            return
+        }
+        
         var setTimerVC: SetTimerViewController
         
         if let existingId = getExistingId(indexPathItem: indexPath.item) {

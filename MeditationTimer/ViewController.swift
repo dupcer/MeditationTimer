@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     var timerLabel: UILabel!
     var timerButton: UIButton!
     var resetButton: UIButton!
+    var themeNameLabel: UILabel!
     var doneButton: UIButton!
     
     var hours: UInt = 0
@@ -122,6 +123,17 @@ class ViewController: UIViewController {
         NSLayoutConstraint.activate([
             settingsButton.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
             settingsButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+        ])
+        
+        
+        themeNameLabel = UILabel()
+        themeNameLabel.isHidden = true
+        themeNameLabel.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        view.addSubview(themeNameLabel)
+        themeNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            themeNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            themeNameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.height / 10),
         ])
         
         addShadowToElements([timerLabel, resetButton])
@@ -360,6 +372,17 @@ class ViewController: UIViewController {
                 self.updateTimerButton()
                 self.resetButton.tintColor = theme.elements
                 self.settingsButton.tintColor = theme.elements
+                
+                self.themeNameLabel.isHidden = false
+                self.themeNameLabel.textColor = theme.elements
+                self.themeNameLabel.text = theme.name
+                self.themeNameLabel.alpha = 1
+            }, completion: { _ in
+                UIView.animate(withDuration: 0.2, delay: 0.5, animations: {
+                    self.themeNameLabel.alpha = 0
+                }, completion: {_ in
+                    self.themeNameLabel.isHidden = true
+                })
             }
         )
         timersListVC.setNewTheme(theme)

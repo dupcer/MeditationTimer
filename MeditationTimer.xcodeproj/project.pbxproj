@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		77220D47291D131A004D9F59 /* TimerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77220D46291D131A004D9F59 /* TimerTableViewCell.swift */; };
+		77220D49291D13C7004D9F59 /* DimSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77220D48291D13C7004D9F59 /* DimSwitchTableViewCell.swift */; };
+		77220D4B291D67F8004D9F59 /* ModelSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77220D4A291D67F8004D9F59 /* ModelSettings.swift */; };
+		77220D4D291D6F76004D9F59 /* CustomCellStyleParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77220D4C291D6F76004D9F59 /* CustomCellStyleParameters.swift */; };
 		774B01D729019DCF00456853 /* UIFont+CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774B01D629019DCF00456853 /* UIFont+CustomFont.swift */; };
 		775D49AA2906F54F00FE4A59 /* SetTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D49A92906F54F00FE4A59 /* SetTheme.swift */; };
 		7765D73329086A8900430F30 /* MainScreenTimersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7765D73229086A8900430F30 /* MainScreenTimersListViewController.swift */; };
@@ -56,6 +60,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		77220D46291D131A004D9F59 /* TimerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerTableViewCell.swift; sourceTree = "<group>"; };
+		77220D48291D13C7004D9F59 /* DimSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimSwitchTableViewCell.swift; sourceTree = "<group>"; };
+		77220D4A291D67F8004D9F59 /* ModelSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSettings.swift; sourceTree = "<group>"; };
+		77220D4C291D6F76004D9F59 /* CustomCellStyleParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellStyleParameters.swift; sourceTree = "<group>"; };
 		774B01D629019DCF00456853 /* UIFont+CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+CustomFont.swift"; sourceTree = "<group>"; };
 		775D49A92906F54F00FE4A59 /* SetTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTheme.swift; sourceTree = "<group>"; };
 		7765D73229086A8900430F30 /* MainScreenTimersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenTimersListViewController.swift; sourceTree = "<group>"; };
@@ -93,6 +101,7 @@
 		778ED2372911C09E00B5D4E5 /* Audio_my2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Audio_my2.mp3; sourceTree = "<group>"; };
 		778ED2382911C09E00B5D4E5 /* Audio_3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Audio_3.mp3; sourceTree = "<group>"; };
 		77A6B210291690660055AA56 /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
+		77A6B2122917CB210055AA56 /* MeditationTimer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeditationTimer.entitlements; sourceTree = "<group>"; };
 		77CBB45D29014BF000A4D3B0 /* MeditationTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeditationTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77CBB46029014BF000A4D3B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		77CBB46229014BF000A4D3B0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -117,9 +126,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		77220D45291D12E9004D9F59 /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+				77220D46291D131A004D9F59 /* TimerTableViewCell.swift */,
+				77220D48291D13C7004D9F59 /* DimSwitchTableViewCell.swift */,
+				77220D4C291D6F76004D9F59 /* CustomCellStyleParameters.swift */,
+			);
+			path = CustomCells;
+			sourceTree = "<group>";
+		};
 		774B01DC2902FDF200456853 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				77220D45291D12E9004D9F59 /* CustomCells */,
 				7765D734290AE0E100430F30 /* SetTimerViewController.swift */,
 				7765D736290B1CB700430F30 /* SettingsTableViewController.swift */,
 				77DF9C24291069FE003F1443 /* SetSoundTableViewController.swift */,
@@ -146,6 +166,7 @@
 		77CBB45F29014BF000A4D3B0 /* MeditationTimer */ = {
 			isa = PBXGroup;
 			children = (
+				77A6B2122917CB210055AA56 /* MeditationTimer.entitlements */,
 				77CBB46429014BF000A4D3B0 /* ViewController.swift */,
 				7765D73229086A8900430F30 /* MainScreenTimersListViewController.swift */,
 				775D49A92906F54F00FE4A59 /* SetTheme.swift */,
@@ -178,6 +199,7 @@
 			children = (
 				7765D73A290C6D7B00430F30 /* ModelTimer.swift */,
 				77DF9C1D290F1EF6003F1443 /* ModelSound.swift */,
+				77220D4A291D67F8004D9F59 /* ModelSettings.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -321,15 +343,19 @@
 			files = (
 				77DF9C2729106A61003F1443 /* SoundPlayer.swift in Sources */,
 				774B01D729019DCF00456853 /* UIFont+CustomFont.swift in Sources */,
+				77220D47291D131A004D9F59 /* TimerTableViewCell.swift in Sources */,
 				77DF9C1B290E70EE003F1443 /* DisplayFormatedTimeExtension.swift in Sources */,
 				77A6B211291690660055AA56 /* ResultsViewController.swift in Sources */,
 				7765D73B290C6D7B00430F30 /* ModelTimer.swift in Sources */,
+				77220D49291D13C7004D9F59 /* DimSwitchTableViewCell.swift in Sources */,
 				7765D73329086A8900430F30 /* MainScreenTimersListViewController.swift in Sources */,
 				7765D735290AE0E100430F30 /* SetTimerViewController.swift in Sources */,
 				77CBB46529014BF000A4D3B0 /* ViewController.swift in Sources */,
 				77CBB46129014BF000A4D3B0 /* AppDelegate.swift in Sources */,
 				77CBB46329014BF000A4D3B0 /* SceneDelegate.swift in Sources */,
+				77220D4B291D67F8004D9F59 /* ModelSettings.swift in Sources */,
 				77DF9C25291069FE003F1443 /* SetSoundTableViewController.swift in Sources */,
+				77220D4D291D6F76004D9F59 /* CustomCellStyleParameters.swift in Sources */,
 				77DF9C1E290F1EF6003F1443 /* ModelSound.swift in Sources */,
 				775D49AA2906F54F00FE4A59 /* SetTheme.swift in Sources */,
 				7765D737290B1CB700430F30 /* SettingsTableViewController.swift in Sources */,
@@ -469,11 +495,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MeditationTimer/MeditationTimer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3FJCZ9R454;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MeditationTimer/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -496,11 +524,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MeditationTimer/MeditationTimer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3FJCZ9R454;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MeditationTimer/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

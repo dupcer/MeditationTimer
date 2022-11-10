@@ -147,8 +147,9 @@ class SetTimerViewController: UIViewController {
         
         let date = timePicker.date
         let components = Calendar.current.dateComponents([.hour, .minute], from: date)
+        let noActualTimeSet: Bool = components.hour == 0 && components.minute == 0
         var min: UInt = 1
-        if let compMin = components.minute, compMin > 0 {
+        if let compMin = components.minute, !noActualTimeSet {
             min = UInt(compMin)
         }
         
