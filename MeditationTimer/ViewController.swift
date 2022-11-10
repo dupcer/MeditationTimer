@@ -242,6 +242,7 @@ class ViewController: UIViewController {
         timerIsPaused = false
         updateTimerButton()
         timing()
+        dimScreenDown(true)
     }
     
     private func stopTimer(){
@@ -249,6 +250,7 @@ class ViewController: UIViewController {
         updateTimerButton()
         timer?.invalidate()
         timer = nil
+        dimScreenDown(false)
     }
     
     private func setTextForTimerLabel() {
@@ -359,24 +361,28 @@ class ViewController: UIViewController {
         )
     }
     
+    private func themeApplying(_ theme: Theme) {
+        self.view.backgroundColor = theme.background
+        self.timerLabel.textColor = theme.elements
+        self.timerLabel.font = theme.font
+        self.timerButtonConfig = theme.buttonConfig
+        self.updateTimerButton()
+        self.resetButton.tintColor = theme.elements
+        self.settingsButton.tintColor = theme.elements
+    }
+    
     private func applyNewTheme(_ theme: Theme, next animateToRight: Bool) {
         UIView.transition(
             with: self.view,
             duration: 0.3,
             options: animateToRight ? .transitionFlipFromRight : .transitionFlipFromLeft,
-            animations: {
-                self.view.backgroundColor = theme.background
-                self.timerLabel.textColor = theme.elements
-                self.timerLabel.font = theme.font
-                self.timerButtonConfig = theme.buttonConfig
-                self.updateTimerButton()
-                self.resetButton.tintColor = theme.elements
-                self.settingsButton.tintColor = theme.elements
+            animations: { [weak self] in
+                self?.themeApplying(theme)
                 
-                self.themeNameLabel.isHidden = false
-                self.themeNameLabel.textColor = theme.elements
-                self.themeNameLabel.text = theme.name
-                self.themeNameLabel.alpha = 1
+                self?.themeNameLabel.isHidden = false
+                self?.themeNameLabel.textColor = theme.elements
+                self?.themeNameLabel.text = theme.name
+                self?.themeNameLabel.alpha = 1
             }, completion: { _ in
                 UIView.animate(withDuration: 0.2, delay: 0.5, animations: {
                     self.themeNameLabel.alpha = 0
@@ -399,6 +405,18 @@ class ViewController: UIViewController {
                 applyNewTheme(newTheme, next: false)
             }
         }
+    }
+    
+    private func dimScreenDown(_ isOn: Bool) {
+        if !ModelSettings.shared.DimSetting {
+            return
+        }
+
+        let theme = isOn ? themeGetter.getDimDownTheme() : themeGetter.getCurrentTheme()
+        UIView.animate(withDuration: 2.0, animations: { [weak self, theme] in
+            self?.themeApplying(theme)
+            self?.timersListVC.setNewTheme(theme)
+        })
     }
     
     @objc private func alertToAskToStartAgain() {

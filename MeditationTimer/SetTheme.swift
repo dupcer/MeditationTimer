@@ -23,6 +23,9 @@ class SetTheme: UIView {
         return listOfThemes[currentThemeIndex]
     }
     
+    func getDimDownTheme() -> Theme {
+        return dimDownTheme
+    }
     
     func getNewTheme(next: Bool) -> Theme? {
         if next, listOfThemes.count > currentThemeIndex+1 {
@@ -70,3 +73,4 @@ fileprivate let starryNightTheme = Theme(name: "Starry Night", background: #colo
 
 fileprivate let boldBlackTheme = Theme(name: "Grey", background: #colorLiteral(red: 0.2605174184, green: 0.2605243921, blue: 0.260520637, alpha: 1), shadow: #colorLiteral(red: 0.7540688515, green: 0.7540867925, blue: 0.7540771365, alpha: 1), elements: #colorLiteral(red: 0.7540688515, green: 0.7540867925, blue: 0.7540771365, alpha: 1),  buttonConfig: UIImage.SymbolConfiguration(paletteColors:  [ #colorLiteral(red: 0.7540688515, green: 0.7540867925, blue: 0.7540771365, alpha: 1), #colorLiteral(red: 0.6642242074, green: 0.6642400622, blue: 0.6642315388, alpha: 1)]).applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 100))).applying(UIImage.SymbolConfiguration(weight: .light)), font: UIFont.systemFont(ofSize: ofSize, weight: .regular))
 
+fileprivate let dimDownTheme = Theme(name: "dimDown SPECIALTHEME", background: .black, shadow: .clear, elements: #colorLiteral(red: 0.2605174184, green: 0.2605243921, blue: 0.260520637, alpha: 1), buttonConfig: UIImage.SymbolConfiguration(paletteColors: [ #colorLiteral(red: 0.1298420429, green: 0.1298461258, blue: 0.1298439503, alpha: 1),  #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)]).applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 100))).applying(UIImage.SymbolConfiguration(weight: .ultraLight)))
