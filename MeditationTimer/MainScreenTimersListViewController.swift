@@ -21,7 +21,7 @@ class MainScreenTimersListViewController: UIViewController, DisplayFormatedTimeE
         super.viewDidLoad()
 
         if theme == nil  {
-            theme = themeGetter.getDefaultTheme()
+            theme = themeGetter.getCurrentTheme()
         }
         
         timerSign = UIImage(systemName: "stopwatch") ?? UIImage(named:"timerSign")

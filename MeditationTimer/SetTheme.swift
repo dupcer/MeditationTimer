@@ -9,14 +9,24 @@ import UIKit
 
 
 class SetTheme: UIView {
-
+    let userDefaults = UserDefaults.standard
+    
     private let listOfThemes: [Theme] = [defaultTheme, starryNightTheme, blackRedTheme, blackTheme, boldBlackTheme, whiteTheme]
     
-    private let lastUsedThemeIndex = 0
-    private var currentThemeIndex = 0
+//    private var lastUsedThemeIndex: Int {
+//        get {
+//            userDefaults.integer(forKey: "lastUsedThemeIndex")
+//        } set {
+//            userDefaults.set(newValue, forKey: "lastUsedThemeIndex")
+//        }
+//    }
     
-    func getDefaultTheme() -> Theme {
-        return listOfThemes[lastUsedThemeIndex]
+    private var currentThemeIndex:Int {
+        get {
+            userDefaults.integer(forKey: "lastUsedThemeIndex")
+        } set {
+            userDefaults.set(newValue, forKey: "lastUsedThemeIndex")
+        }
     }
     
     func getCurrentTheme() -> Theme {

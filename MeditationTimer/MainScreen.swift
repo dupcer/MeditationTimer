@@ -33,7 +33,7 @@ class MainScreen: UIViewController {
     
     private var defaultTheme: Theme {
         get {
-            themeGetter.getDefaultTheme()
+            themeGetter.getCurrentTheme()
         }
     }
     
@@ -62,12 +62,13 @@ class MainScreen: UIViewController {
         swipeUpGestureRecognizer.direction = .up
         themeGetter.addGestureRecognizer(swipeUpGestureRecognizer)
         
-        timerButtonConfig = themeGetter.getDefaultTheme().buttonConfig
+        timerButtonConfig = themeGetter.getCurrentTheme().buttonConfig
         
         timerLabel = UILabel()
         timerLabel.translatesAutoresizingMaskIntoConstraints = false
         timerLabel.textAlignment = .center
         timerLabel.font = defaultTheme.font
+        timerLabel.textColor = defaultTheme.elements
         
         setTextForTimerLabel()
         view.addSubview(timerLabel)
