@@ -50,7 +50,7 @@
 		77A6B211291690660055AA56 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A6B210291690660055AA56 /* ResultsViewController.swift */; };
 		77CBB46129014BF000A4D3B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CBB46029014BF000A4D3B0 /* AppDelegate.swift */; };
 		77CBB46329014BF000A4D3B0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CBB46229014BF000A4D3B0 /* SceneDelegate.swift */; };
-		77CBB46529014BF000A4D3B0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CBB46429014BF000A4D3B0 /* ViewController.swift */; };
+		77CBB46529014BF000A4D3B0 /* MainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CBB46429014BF000A4D3B0 /* MainScreen.swift */; };
 		77CBB46A29014BF200A4D3B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77CBB46929014BF200A4D3B0 /* Assets.xcassets */; };
 		77CBB46D29014BF200A4D3B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77CBB46B29014BF200A4D3B0 /* LaunchScreen.storyboard */; };
 		77DF9C1B290E70EE003F1443 /* DisplayFormatedTimeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF9C1A290E70EE003F1443 /* DisplayFormatedTimeExtension.swift */; };
@@ -105,7 +105,7 @@
 		77CBB45D29014BF000A4D3B0 /* MeditationTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeditationTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77CBB46029014BF000A4D3B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		77CBB46229014BF000A4D3B0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		77CBB46429014BF000A4D3B0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		77CBB46429014BF000A4D3B0 /* MainScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreen.swift; sourceTree = "<group>"; };
 		77CBB46929014BF200A4D3B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		77CBB46C29014BF200A4D3B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		77CBB46E29014BF200A4D3B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -167,7 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				77A6B2122917CB210055AA56 /* MeditationTimer.entitlements */,
-				77CBB46429014BF000A4D3B0 /* ViewController.swift */,
+				77CBB46429014BF000A4D3B0 /* MainScreen.swift */,
 				7765D73229086A8900430F30 /* MainScreenTimersListViewController.swift */,
 				775D49A92906F54F00FE4A59 /* SetTheme.swift */,
 				77A6B210291690660055AA56 /* ResultsViewController.swift */,
@@ -350,7 +350,7 @@
 				77220D49291D13C7004D9F59 /* DimSwitchTableViewCell.swift in Sources */,
 				7765D73329086A8900430F30 /* MainScreenTimersListViewController.swift in Sources */,
 				7765D735290AE0E100430F30 /* SetTimerViewController.swift in Sources */,
-				77CBB46529014BF000A4D3B0 /* ViewController.swift in Sources */,
+				77CBB46529014BF000A4D3B0 /* MainScreen.swift in Sources */,
 				77CBB46129014BF000A4D3B0 /* AppDelegate.swift in Sources */,
 				77CBB46329014BF000A4D3B0 /* SceneDelegate.swift in Sources */,
 				77220D4B291D67F8004D9F59 /* ModelSettings.swift in Sources */,

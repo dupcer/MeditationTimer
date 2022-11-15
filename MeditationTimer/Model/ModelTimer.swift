@@ -11,12 +11,50 @@ class ModelTimer {
     
     static let shared = ModelTimer()
 
-    private init() { }
+    private init() {
+        listOfTimersForSound = populateListFrom()
+        
+        
+        func populateListFrom() -> [TimerForSound] {
+            var arrToReturn: [TimerForSound] = []
+            
+            for id in possableIDs {
+                if UserDefaults.standard.string(forKey: id) != nil {
+                    let hour = UInt(UserDefaults.standard.integer(forKey: "\(id)_hour"))
+                    let min = UInt(UserDefaults.standard.integer(forKey: "\(id)_minute"))
+                    var soundFileName: String? = nil
+                    if let fileName = UserDefaults.standard.string(forKey: "\(id)_soundFileName") {
+                        soundFileName = fileName
+                    }
+                    
+                    let newTimer = TimerForSound(
+                        id: id,
+                        hour: hour,
+                        minute: min,
+                        soundFileName: soundFileName
+                    )
+                    
+                    arrToReturn.append(newTimer)
+                    
+                }
+                else {
+                    unusedIDs.append(id)
+                }
+            }
+            
+            return arrToReturn.sorted()
+        }
+    }
+    
+    let userDefaults = UserDefaults.standard
     private let soundPlayer = SoundPlayer()
     
-    private var listOfTimersForSound: [TimerForSound] = [] {
+    
+    
+    private var listOfTimersForSound: [TimerForSound] {
         didSet {
             listOfTimersForSound.sort()
+            updateUserDefaults()
         }
     }
 
@@ -85,17 +123,43 @@ class ModelTimer {
             }
         }
     }
+
+    
+    private func updateUserDefaults() {
+        removeTimersFromUserDefaults()
         
+        for timer in listOfTimersForSound {
+            let idForKey = "\(timer.id)_"
+            userDefaults.set(timer.id, forKey: "\(timer.id)")
+            userDefaults.set(timer.minute, forKey: "\(idForKey)minute")
+            userDefaults.set(timer.hour, forKey: "\(idForKey)hour")
+            if let soundFileName = timer.soundFileName {
+                userDefaults.set(soundFileName, forKey: "\(idForKey)soundFileName")
+            }
+        }
+    }
+    
+    private func removeTimersFromUserDefaults() {
+        for i in userDefaults.dictionaryRepresentation() {
+            if i.key.contains("timer_id") {
+                userDefaults.removeObject(forKey: i.key)
+            }
+        }
+    }
 }
 
 
 struct TimerForSound: Comparable {
-    init(hour: UInt, minute: UInt, soundFileName: String?) {
+    init(id: String?, hour: UInt, minute: UInt, soundFileName: String?) {
         self.hour = hour
         self.minute = minute
         self.soundFileName = soundFileName
-        self.id = unusedIDs[0]
-        unusedIDs.remove(at: 0)
+        if id == nil {
+            self.id = unusedIDs[0]
+            unusedIDs.remove(at: 0)
+        } else {
+            self.id = id!
+        }
     }
     
     let id: String
@@ -123,4 +187,6 @@ struct TimerForSound: Comparable {
     
 }
 
-var unusedIDs = ["id-A", "id-B", "id-C"]
+fileprivate let possableIDs = ["timer_id-A", "timer_id-B", "timer_id-C"]
+
+fileprivate var unusedIDs: [String] = []

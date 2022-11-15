@@ -4,12 +4,12 @@
 //
 //  Created by Damie on 27.10.2022.
 //
-
+import Foundation
 import UIKit
 
 class SettingsTableViewController: UITableViewController, UINavigationControllerDelegate, DisplayFormatedTimeExtension {
 
-    weak var vcToUpdate: MainScreenTimersListViewController? = nil
+    weak var mainScreenTimersListVC: MainScreenTimersListViewController? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +30,7 @@ class SettingsTableViewController: UITableViewController, UINavigationController
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if let vcToUpdate = vcToUpdate {
+        if let vcToUpdate = mainScreenTimersListVC {
             vcToUpdate.setListOfTimerTimes()
         }
     }
@@ -97,11 +97,11 @@ class SettingsTableViewController: UITableViewController, UINavigationController
         var setTimerVC: SetTimerViewController
         
         if let existingId = getExistingId(indexPathItem: indexPath.item) {
-            setTimerVC = SetTimerViewController(id: existingId, isTimerFreshNew: false)
+            setTimerVC = SetTimerViewController(id: existingId, isTimerFreshNew: false, mainScreenTimersListVC: mainScreenTimersListVC)
         } else {
-            let newTimer = TimerForSound(hour: 0, minute: 1, soundFileName: nil)
+            let newTimer = TimerForSound(id: nil, hour: 0, minute: 1, soundFileName: nil)
             ModelTimer.shared.addNewTimerToList(newTimer)
-            setTimerVC = SetTimerViewController(id: newTimer.id, isTimerFreshNew: true)
+            setTimerVC = SetTimerViewController(id: newTimer.id, isTimerFreshNew: true, mainScreenTimersListVC: mainScreenTimersListVC)
         }
 
         _ = UINavigationController(rootViewController: setTimerVC)

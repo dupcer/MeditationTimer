@@ -9,12 +9,16 @@ import UIKit
 
 class SetTimerViewController: UIViewController {
     
-    init(id: String, isTimerFreshNew: Bool) {
+    init(id: String,
+         isTimerFreshNew: Bool,
+         mainScreenTimersListVC: MainScreenTimersListViewController?) {
         self.modelID = id
         self.isTimerFreshNew = isTimerFreshNew
+        self.mainScreenTimersListVC = mainScreenTimersListVC
         super.init(nibName: nil, bundle: nil)
     }
     
+    let mainScreenTimersListVC: MainScreenTimersListViewController?
     let modelID: String
     let isTimerFreshNew: Bool
     
@@ -37,6 +41,7 @@ class SetTimerViewController: UIViewController {
     private let mainText = "Set timer"
     private var secondaryTextLabel: UILabel!
     private let secondaryText = "Turn the timer on, to hear sound on the set time"
+    private let soundButtonTitle = "Sound for this timer"
     
     private var soundSubtitle: String {
         return ModelSound.shared.getDescriptiveName(currentSoundFileName)
@@ -158,6 +163,15 @@ class SetTimerViewController: UIViewController {
             hour: UInt(components.hour ?? 0),
             minute: min)
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        
+        if let vcToUpdate = mainScreenTimersListVC {
+            vcToUpdate.setListOfTimerTimes()
+        }
+    }
 
     @objc private func selectSoundButtonTapped() {
         let setSoundVC = SetSoundTableViewController(id: modelID)
@@ -167,10 +181,11 @@ class SetTimerViewController: UIViewController {
      
     private func getSoundButtonConfig() -> UIButton.Configuration {
         var soundButtonConfig = UIButton.Configuration.gray()
-        soundButtonConfig.title = "Sound for this timer"
+        soundButtonConfig.title = soundButtonTitle
         soundButtonConfig.subtitle = soundSubtitle
         soundButtonConfig.image = UIImage(systemName: "speaker.wave.3.fill") ?? UIImage(named:"arrowSign")
         
+        soundButtonConfig.titleAlignment = .leading
         soundButtonConfig.buttonSize = .large
         soundButtonConfig.baseForegroundColor = .label
         soundButtonConfig.cornerStyle = .large

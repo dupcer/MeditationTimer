@@ -9,7 +9,7 @@
 import UIKit
 let blurStyleForElements: UIBlurEffect.Style = .regular
 
-class ViewController: UIViewController {
+class MainScreen: UIViewController {
     
     var settingsButton: UIButton!
     var timerLabel: UILabel!
@@ -152,7 +152,7 @@ class ViewController: UIViewController {
             timersListVC.view.heightAnchor.constraint(equalToConstant: 50),
         ])
         
-        settingsVC.vcToUpdate = timersListVC
+        settingsVC.mainScreenTimersListVC = timersListVC
         
         
         

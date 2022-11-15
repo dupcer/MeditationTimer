@@ -12,6 +12,14 @@ class ModelSettings {
     
     private init() { }
     
-    var DimSetting: Bool = false
+    let userDefaults = UserDefaults.standard
+    
+    var DimSetting: Bool {
+        get {
+            userDefaults.object(forKey: "DimSetting") as? Bool ?? false
+        } set {
+            userDefaults.set(newValue, forKey: "DimSetting")
+        }
+    }
     
 }
