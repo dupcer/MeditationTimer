@@ -58,10 +58,10 @@ class AboutAuthorViewController: UIViewController {
 
         self.view.addSubview(scrollView)
         NSLayoutConstraint.activate([
-            scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8.0),
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 8.0),
-            scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8.0),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8.0),
+            scrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
             imageView.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
             imageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16.0),
@@ -96,4 +96,4 @@ class AboutAuthorViewController: UIViewController {
 
 
 
-fileprivate let textAboutMe = "Hi, I'm Damie John. I live with my family in London, UK. I started meditating in order to raise the quality of my sleep. The effect was almost immediate. So I started meditating every evening, for 15 minutes or so. Sometime after I've decided to build this application to make the process is smooth and convenient as possible.\nThanks to my wife, Angelina, as she's been practicing meditation for years. She encouraged and guided me through this process. Which, in turn, inspired me to build this app."
+fileprivate let textAboutMe = "Hi, I'm Damie John. I live with my family in London, UK. I started meditating in order to raise the quality of my sleep. The effect was almost immediate. So I started meditating every evening, for 15 minutes or so. Sometime after I've decided to build this application to make the process is smooth and convenient as possible.\n \nThanks to my wife, Angelina, as she's been practicing meditation for years. And she encouraged and guided me through this process. Which, in turn, inspired me to build this app."
