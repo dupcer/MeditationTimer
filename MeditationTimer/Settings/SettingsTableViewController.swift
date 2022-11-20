@@ -18,6 +18,7 @@ class SettingsTableViewController: UITableViewController, UINavigationController
         view.backgroundColor = .systemGray6
         
         tableView.register(DimSwitchTableViewCell.self, forCellReuseIdentifier: "DimCell")
+        tableView.register(AboutAuthorTableViewCell.self, forCellReuseIdentifier: "AboutAuthor")
 
     }
 
@@ -36,7 +37,7 @@ class SettingsTableViewController: UITableViewController, UINavigationController
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -44,6 +45,8 @@ class SettingsTableViewController: UITableViewController, UINavigationController
             return "Timers"
         } else if section == 1 {
             return "Display Setting"
+        } else if section == 2 {
+            return "Info"
         }
         return nil
     }
@@ -60,6 +63,8 @@ class SettingsTableViewController: UITableViewController, UINavigationController
             }
             
         } else if section == 1 {
+            return 1
+        }  else if section == 2 {
             return 1
         }
         return 1
@@ -81,8 +86,13 @@ class SettingsTableViewController: UITableViewController, UINavigationController
             cell.contentConfiguration = content
             return cell
 
-        } else {
+        } else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DimCell", for: indexPath) as! DimSwitchTableViewCell
+            cell.backgroundColor = .tertiarySystemBackground
+            return cell
+        } else //if indexPath.section == 2
+        {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AboutAuthor", for: indexPath) as! AboutAuthorTableViewCell
             cell.backgroundColor = .tertiarySystemBackground
             return cell
         }
@@ -90,7 +100,10 @@ class SettingsTableViewController: UITableViewController, UINavigationController
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section != 0 {
+        if indexPath.section == 2 {
+            let aboutVC:AboutAuthorViewController = AboutAuthorViewController()
+            _ = UINavigationController(rootViewController: aboutVC)
+            navigationController?.pushViewController(aboutVC, animated: true)
             return
         }
         

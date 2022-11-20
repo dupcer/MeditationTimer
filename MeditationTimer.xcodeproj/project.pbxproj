@@ -11,6 +11,8 @@
 		77220D49291D13C7004D9F59 /* DimSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77220D48291D13C7004D9F59 /* DimSwitchTableViewCell.swift */; };
 		77220D4B291D67F8004D9F59 /* ModelSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77220D4A291D67F8004D9F59 /* ModelSettings.swift */; };
 		77220D4D291D6F76004D9F59 /* CustomCellStyleParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77220D4C291D6F76004D9F59 /* CustomCellStyleParameters.swift */; };
+		77220D4F2924DAAB004D9F59 /* AboutAuthorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77220D4E2924DAAB004D9F59 /* AboutAuthorTableViewCell.swift */; };
+		77220D512924DBEB004D9F59 /* AboutAuthorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77220D502924DBEB004D9F59 /* AboutAuthorViewController.swift */; };
 		774B01D729019DCF00456853 /* UIFont+CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774B01D629019DCF00456853 /* UIFont+CustomFont.swift */; };
 		775D49AA2906F54F00FE4A59 /* SetTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D49A92906F54F00FE4A59 /* SetTheme.swift */; };
 		7765D73329086A8900430F30 /* MainScreenTimersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7765D73229086A8900430F30 /* MainScreenTimersListViewController.swift */; };
@@ -64,6 +66,8 @@
 		77220D48291D13C7004D9F59 /* DimSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		77220D4A291D67F8004D9F59 /* ModelSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSettings.swift; sourceTree = "<group>"; };
 		77220D4C291D6F76004D9F59 /* CustomCellStyleParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellStyleParameters.swift; sourceTree = "<group>"; };
+		77220D4E2924DAAB004D9F59 /* AboutAuthorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAuthorTableViewCell.swift; sourceTree = "<group>"; };
+		77220D502924DBEB004D9F59 /* AboutAuthorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAuthorViewController.swift; sourceTree = "<group>"; };
 		774B01D629019DCF00456853 /* UIFont+CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+CustomFont.swift"; sourceTree = "<group>"; };
 		775D49A92906F54F00FE4A59 /* SetTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTheme.swift; sourceTree = "<group>"; };
 		7765D73229086A8900430F30 /* MainScreenTimersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenTimersListViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +133,7 @@
 		77220D45291D12E9004D9F59 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
+				77220D4E2924DAAB004D9F59 /* AboutAuthorTableViewCell.swift */,
 				77220D46291D131A004D9F59 /* TimerTableViewCell.swift */,
 				77220D48291D13C7004D9F59 /* DimSwitchTableViewCell.swift */,
 				77220D4C291D6F76004D9F59 /* CustomCellStyleParameters.swift */,
@@ -143,6 +148,7 @@
 				7765D734290AE0E100430F30 /* SetTimerViewController.swift */,
 				7765D736290B1CB700430F30 /* SettingsTableViewController.swift */,
 				77DF9C24291069FE003F1443 /* SetSoundTableViewController.swift */,
+				77220D502924DBEB004D9F59 /* AboutAuthorViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -357,8 +363,10 @@
 				77DF9C25291069FE003F1443 /* SetSoundTableViewController.swift in Sources */,
 				77220D4D291D6F76004D9F59 /* CustomCellStyleParameters.swift in Sources */,
 				77DF9C1E290F1EF6003F1443 /* ModelSound.swift in Sources */,
+				77220D4F2924DAAB004D9F59 /* AboutAuthorTableViewCell.swift in Sources */,
 				775D49AA2906F54F00FE4A59 /* SetTheme.swift in Sources */,
 				7765D737290B1CB700430F30 /* SettingsTableViewController.swift in Sources */,
+				77220D512924DBEB004D9F59 /* AboutAuthorViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

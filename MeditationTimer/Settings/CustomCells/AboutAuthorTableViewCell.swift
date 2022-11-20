@@ -7,22 +7,19 @@
 
 import UIKit
 
-class DimSwitchTableViewCell: UITableViewCell {
+class AboutAuthorTableViewCell: UITableViewCell {
     let customCellStyle = CustomCellStyleParameters()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        let switcher = UISwitch()
-        switcher.setOn(ModelSettings.shared.DimSetting, animated: true)
-        switcher.addTarget(self, action: #selector(switchValueDidChange(_:)), for: .valueChanged)
-        accessoryView = switcher
+        accessoryType = .disclosureIndicator
         self.backgroundColor = customCellStyle.backgroundColor
         self.layer.cornerRadius = customCellStyle.cornerRadius
         var content = self.defaultContentConfiguration()
-        content.text = "Dim down while meditating"
-        content.secondaryText = "Recommended"
-        content.image = UIImage(systemName: "sun.min.fill")?.withTintColor(.label, renderingMode: .alwaysOriginal)
+        content.text = "About the Author"
+
+        content.image = UIImage(systemName: "person.crop.circle")?.withTintColor(.label, renderingMode: .alwaysOriginal)
 
         self.contentConfiguration = content
     }
@@ -35,9 +32,5 @@ class DimSwitchTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-    }
-
-    @objc private func switchValueDidChange(_ sender: UISwitch) {
-        ModelSettings.shared.DimSetting = sender.isOn
     }
 }
