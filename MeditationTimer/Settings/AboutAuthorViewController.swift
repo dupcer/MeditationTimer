@@ -38,8 +38,6 @@ class AboutAuthorViewController: UIViewController {
         follow.translatesAutoresizingMaskIntoConstraints = false
         follow.isUserInteractionEnabled = true
         follow.addGestureRecognizer(guesture)
-
-        let isDarkMode = self.traitCollection.userInterfaceStyle == .dark
         
         let igIcon = UIImage(named: "instagramIcon")
         let igIconView = UIImageView(image: igIcon!)

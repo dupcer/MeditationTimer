@@ -19,6 +19,7 @@
 		7765D735290AE0E100430F30 /* SetTimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7765D734290AE0E100430F30 /* SetTimerViewController.swift */; };
 		7765D737290B1CB700430F30 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7765D736290B1CB700430F30 /* SettingsTableViewController.swift */; };
 		7765D73B290C6D7B00430F30 /* ModelTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7765D73A290C6D7B00430F30 /* ModelTimer.swift */; };
+		7766EEA8292A7B6B009DCC3B /* ModelTrackUserResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7766EEA7292A7B6B009DCC3B /* ModelTrackUserResults.swift */; };
 		778ED2392911C09E00B5D4E5 /* Audio_my1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 778ED21B2911C09D00B5D4E5 /* Audio_my1.mp3 */; };
 		778ED23A2911C09E00B5D4E5 /* Audio_2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 778ED21C2911C09D00B5D4E5 /* Audio_2.mp3 */; };
 		778ED23B2911C09E00B5D4E5 /* Audio_13.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 778ED21D2911C09D00B5D4E5 /* Audio_13.mp3 */; };
@@ -74,6 +75,7 @@
 		7765D734290AE0E100430F30 /* SetTimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTimerViewController.swift; sourceTree = "<group>"; };
 		7765D736290B1CB700430F30 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		7765D73A290C6D7B00430F30 /* ModelTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTimer.swift; sourceTree = "<group>"; };
+		7766EEA7292A7B6B009DCC3B /* ModelTrackUserResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTrackUserResults.swift; sourceTree = "<group>"; };
 		778ED21B2911C09D00B5D4E5 /* Audio_my1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Audio_my1.mp3; sourceTree = "<group>"; };
 		778ED21C2911C09D00B5D4E5 /* Audio_2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Audio_2.mp3; sourceTree = "<group>"; };
 		778ED21D2911C09D00B5D4E5 /* Audio_13.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Audio_13.mp3; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 				7765D73A290C6D7B00430F30 /* ModelTimer.swift */,
 				77DF9C1D290F1EF6003F1443 /* ModelSound.swift */,
 				77220D4A291D67F8004D9F59 /* ModelSettings.swift */,
+				7766EEA7292A7B6B009DCC3B /* ModelTrackUserResults.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				77220D4D291D6F76004D9F59 /* CustomCellStyleParameters.swift in Sources */,
 				77DF9C1E290F1EF6003F1443 /* ModelSound.swift in Sources */,
 				77220D4F2924DAAB004D9F59 /* AboutAuthorTableViewCell.swift in Sources */,
+				7766EEA8292A7B6B009DCC3B /* ModelTrackUserResults.swift in Sources */,
 				775D49AA2906F54F00FE4A59 /* SetTheme.swift in Sources */,
 				7765D737290B1CB700430F30 /* SettingsTableViewController.swift in Sources */,
 				77220D512924DBEB004D9F59 /* AboutAuthorViewController.swift in Sources */,

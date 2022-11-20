@@ -137,7 +137,7 @@ class MainScreen: UIViewController {
             themeNameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.height / 10),
         ])
         
-        addShadowToElements([timerLabel, resetButton])
+        addShadowToElements([timerLabel, resetButton], color: defaultTheme.shadow)
         
         timersListVC.view.isUserInteractionEnabled = true
         let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showSettings))
@@ -289,9 +289,9 @@ class MainScreen: UIViewController {
         resetButton.isHidden = true
     }
     
-    private func addShadowToElements(_ elements: [UIView]) {
+    private func addShadowToElements(_ elements: [UIView], color: UIColor) {
         for view in elements {
-            view.layer.shadowColor = defaultTheme.shadow.cgColor
+            view.layer.shadowColor = color.cgColor
             view.layer.shadowOpacity = 50
             view.layer.shadowOffset = .zero
             view.layer.shadowRadius = 15
@@ -370,6 +370,8 @@ class MainScreen: UIViewController {
         self.updateTimerButton()
         self.resetButton.tintColor = theme.elements
         self.settingsButton.tintColor = theme.elements
+        
+        addShadowToElements([timerLabel, resetButton], color: theme.shadow)
     }
     
     private func applyNewTheme(_ theme: Theme, next animateToRight: Bool) {
