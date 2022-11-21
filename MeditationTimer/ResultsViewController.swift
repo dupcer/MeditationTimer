@@ -9,6 +9,8 @@ import UIKit
 
 class ResultsViewController: UIViewController {
     
+    private let model = ModelTrackUserResults.shared
+    
     init(blurStyle: UIBlurEffect.Style) {
         self.blurStyle = blurStyle
         super.init(nibName: nil, bundle: nil)
@@ -18,11 +20,15 @@ class ResultsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let blurStyle: UIBlurEffect.Style
+    private let blurStyle: UIBlurEffect.Style
     
-    let days: Int = 17
+    private var days: Int {
+        model.numberOfConsecutiveDays
+    }
     
-    var label: UILabel!
+    private var aboveText: UILabel!
+    private var numberImage: UIImage!
+    private var belowText: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,19 +39,38 @@ class ResultsViewController: UIViewController {
         blurEffectView.frame = view.frame
         view.addSubview(blurEffectView)
         
-        label = UILabel()
-        label.text = "You're meditating \(days) days in a row"
-        label.lineBreakMode = .byWordWrapping
-        view.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
+        aboveText = UILabel()
+        numberImage = UIImage()
+        belowText = UILabel()
+        
+        populateProgressText()
+        
+        aboveText.lineBreakMode = .byWordWrapping
+        view.addSubview(aboveText)
+        aboveText.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            aboveText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            aboveText.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
         
     }
     
-
+    private func populateProgressText() {
+        switch days {
+        case ...1:
+            aboveText.text = "It's"
+            numberImage = UIImage(systemName: "1.square.fill")
+            belowText.text = "day that you're consecutively meditating"
+        case 50...:
+            aboveText.text = "You're consecutively meditating for over"
+            numberImage = UIImage(systemName: "50.square.fill")
+            belowText.text = "days now"
+        default:
+            aboveText.text = "You're consecutively meditating for "
+            numberImage = UIImage(systemName: "\(days).square.fill")
+            aboveText.text = "days"
+        }
+    }
 
 }

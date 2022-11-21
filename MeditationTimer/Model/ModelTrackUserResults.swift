@@ -40,9 +40,9 @@ class ModelTrackUserResults {
     func addTodayAsConsecutiveDay() {
         userDefaults.set(Date.now, forKey: "lastDate")
         
-        var number = numberOfConsecutiveDays
-        if number >= 50 {
-            userDefaults.set(50, forKey: "numberOfConsecutiveDays")
+        let number = numberOfConsecutiveDays
+        if number > 50 {
+            userDefaults.set(51, forKey: "numberOfConsecutiveDays")
         } else {
             userDefaults.set(number+1, forKey: "numberOfConsecutiveDays")
         }
