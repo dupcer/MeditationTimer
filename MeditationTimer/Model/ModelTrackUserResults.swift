@@ -12,7 +12,7 @@ import Foundation
  
     last date: Date
     number of consecutive days: Int
-    
+    allMeditationDates: [Date]
  
  */
 
@@ -38,6 +38,8 @@ class ModelTrackUserResults {
     }
     
     func addTodayAsConsecutiveDay() {
+        addCurrentDateToUserDefaultsListOfMeditationDates()
+        
         userDefaults.set(Date.now, forKey: "lastDate")
         
         let number = numberOfConsecutiveDays
@@ -46,5 +48,16 @@ class ModelTrackUserResults {
         } else {
             userDefaults.set(number+1, forKey: "numberOfConsecutiveDays")
         }
+    }
+    
+    private func addCurrentDateToUserDefaultsListOfMeditationDates() {
+        var dates: [Date] = userDefaults.object(forKey: "allMeditationDates") as? [Date] ?? []
+        for d in dates {
+            if d == Date.now {
+                return
+            }
+        }
+        dates.append(Date.now)
+        userDefaults.set(dates, forKey: "allMeditationDates")
     }
 }
